@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "willow:block/apple_blossom_leaves"
+  }
+}

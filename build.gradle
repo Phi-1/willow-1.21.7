@@ -27,9 +27,15 @@ repositories {
 			includeGroup "maven.modrinth"
 		}
 	}
-
-	flatDir {
-		dirs "lib"
+	exclusiveContent {
+		forRepository {
+			maven {
+				url "https://cursemaven.com"
+			}
+		}
+		filter {
+			includeGroup "curse.maven"
+		}
 	}
 }
 
@@ -59,7 +65,7 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	modCompileOnly "maven.modrinth:serene-seasons:21.7.0.0"
+	modCompileOnly "curse.maven:sereneseasons-291874:6747300"
 }
 
 processResources {

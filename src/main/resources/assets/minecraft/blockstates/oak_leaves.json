@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "has_apples=false": {
+      "model": "minecraft:block/oak_leaves"
+    },
+    "has_apples=true": {
+      "model": "willow:block/apple_blossom_leaves"
+    }
+  }
+}

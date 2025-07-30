@@ -3,6 +3,7 @@
 	"package": "phi.willow.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
+		"BlocksMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
