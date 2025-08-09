@@ -1,14 +1,15 @@
 {
-	"required": true,
-	"package": "phi.willow.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"BlocksMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"overwrites": {
-		"requireAnnotations": true
-	}
+  "required": true,
+  "package": "phi.willow.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "BlocksMixin",
+    "PlayerEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
 }

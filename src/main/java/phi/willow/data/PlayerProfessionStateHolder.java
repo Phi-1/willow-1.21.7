@@ -35,30 +35,4 @@ public class PlayerProfessionStateHolder {
     }
 
     public Map<UUID, PlayerProfessionState> getData() { return this.playerStates; }
-
-    public static class PlayerProfessionState {
-
-        public static final Codec<PlayerProfessionState> CODEC = Codec.INT.listOf().xmap(
-                PlayerProfessionState::new,
-                PlayerProfessionState::getData
-        );
-
-        private final List<Integer> xpPerProfession = new ArrayList<>();
-
-        public PlayerProfessionState(List<Integer> xpValues)
-        {
-            for (int i = 0; i < Profession.values().length; i++) {
-                this.xpPerProfession.set(i, xpValues.get(i));
-            }
-        }
-        public void setXP(Profession profession, int amount) {
-            xpPerProfession.set(profession.ordinal(), amount);
-        }
-
-        public int getXP(Profession profession) {
-            return xpPerProfession.get(profession.ordinal());
-        }
-
-        public List<Integer> getData() { return this.xpPerProfession.subList(0, Profession.values().length); }
-    }
 }
