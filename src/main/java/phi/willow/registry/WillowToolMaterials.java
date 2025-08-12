@@ -7,5 +7,7 @@ import net.minecraft.registry.tag.ItemTags;
 public class WillowToolMaterials {
     // TODO: refine enchantment value once materials are determined. Speaking of, materials.
     // durability, mining speed, damage modifier, enchantability, repair materials
-    public static final ToolMaterial SLEDGEHAMMER = new ToolMaterial(BlockTags.INCORRECT_FOR_DIAMOND_TOOL, 1800, 4.0f, 8.0f, 12, ItemTags.DIRT);
+    public static final ToolMaterial SLEDGEHAMMER = new ToolMaterial(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 1800, 4.0f, 8.0f, 12, ItemTags.DIRT);
+    // TODO: repair mat tags, enchantment value
+    public static final ToolMaterial THE_HERALD = new ToolMaterial(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 1200, 6.0f, 0.0f, 8, ItemTags.DIRT);
 }

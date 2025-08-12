@@ -4,12 +4,17 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import phi.willow.registry.WillowToolMaterials;
 
 public class SledgeHammerItem extends Item {
     public SledgeHammerItem(Settings settings) {
-        super(settings);
+        super(settings
+                .pickaxe(WillowToolMaterials.SLEDGEHAMMER, 6.0f, -5.0f)
+                .rarity(Rarity.EPIC)
+                .fireproof());
     }
 
     @Override

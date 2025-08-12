@@ -3,12 +3,15 @@ package phi.willow.mixin;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalFloatRef;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,9 +19,12 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import phi.willow.data.Profession;
 import phi.willow.data.ProfessionLevel;
+import phi.willow.registry.WillowEffects;
+import phi.willow.statuseffects.LightningResistanceStatusEffect;
 import phi.willow.util.ProfessionUtil;
 
 @Mixin(PlayerEntity.class)
@@ -65,6 +71,17 @@ public abstract class PlayerEntityMixin {
         }
         if (isTool && !ProfessionUtil.canUseToolAtLevel(level, heldItem))
             f.set(REDUCED_MINING_SPEED);
+    }
+
+    @ModifyVariable(method = "damage", at = @At("HEAD"), ordinal = 0, argsOnly = true)
+    private float checkForLightningResistance(float amount)
+    {
+        StatusEffectInstance instance = self().getStatusEffect(WillowEffects.LIGHTNING_RESISTANCE);
+        if (instance != null)
+        {
+            return LightningResistanceStatusEffect.getReducedDamage(amount, instance.getAmplifier());
+        }
+        return amount;
     }
 
     @Unique

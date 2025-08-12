@@ -8,6 +8,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import phi.willow.Willow;
 import phi.willow.items.SledgeHammerItem;
+import phi.willow.items.TheHeraldItem;
 
 import java.util.function.Function;
 
@@ -19,7 +20,13 @@ public class WillowItems {
     public static final Item SLEDGEHAMMER = register(
             "sledgehammer",
             SledgeHammerItem::new,
-            new Item.Settings().pickaxe(WillowToolMaterials.SLEDGEHAMMER, 6.0f, -5.0f)
+            new Item.Settings()
+    );
+
+    public static final Item THE_HERALD = register(
+            "the_herald",
+            TheHeraldItem::new,
+            new Item.Settings()
     );
 
     // Items

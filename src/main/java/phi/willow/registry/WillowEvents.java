@@ -26,6 +26,7 @@ import phi.willow.data.Profession;
 import phi.willow.data.ProfessionLevel;
 import phi.willow.data.WillowPersistentState;
 import phi.willow.util.ProfessionUtil;
+import phi.willow.util.TickTimers;
 
 import java.util.Optional;
 
@@ -33,6 +34,8 @@ public class WillowEvents {
 
     public static void register()
     {
+        ServerTickEvents.END_WORLD_TICK.register(TickTimers::onServerTick);
+
         // TODO: xp stuff
         PlayerBlockBreakEvents.AFTER.register((world, player, pos, blockState, blockEntity) -> {
             if (world.isClient)

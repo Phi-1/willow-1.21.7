@@ -16,10 +16,7 @@ import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import phi.willow.data.WillowPersistentState;
-import phi.willow.registry.WillowEvents;
-import phi.willow.registry.WillowItems;
-import phi.willow.registry.WillowNetworking;
-import phi.willow.registry.WillowTags;
+import phi.willow.registry.*;
 import sereneseasons.api.season.SeasonHelper;
 
 import java.util.Optional;
@@ -31,7 +28,6 @@ public class Willow implements ModInitializer {
 	// TODO: feedback on profession levelup with sound
 	// TODO: match blocks in gives_{profession}_xp tag with needs_{tier}_tool tag, store in ram for quick read, so xp quick to calc
 	// ^ though BlockState.isIn() derives from java.Set, so maybe that's pretty fast already
-	// TODO: figure out what to do with netherite tools, in master tier or add tier?
 	// TODO: add custom tools to minecraft item tags for tools
 	// TODO: sync player state data on xp gain
 	// TODO: Item#onItemEntityDestroyed is a really cool event for custom crafting shenanigans
@@ -39,6 +35,9 @@ public class Willow implements ModInitializer {
 	// TODO: tooltips for profession level requirements
 	// TODO: block trident throwing unless proficient
 	// TODO: HUD indicators when holding/wearing stuff you dont have proficiency for?
+	// TODO: leaves drop sticks
+	// TODO: block tool level requirements for drops
+	// TODO: don't forget to add new tools to base minecraft tags, sledgehammer to pickaxes.json and such
 
 	public static final String MOD_ID = "willow";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
@@ -47,6 +46,7 @@ public class Willow implements ModInitializer {
 	public void onInitialize() {
 		WillowItems.initialize();
 		WillowTags.initialize();
+		WillowEffects.initialize();
 		WillowEvents.register();
 		WillowNetworking.initialize();
 	}
