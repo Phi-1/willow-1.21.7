@@ -22,6 +22,7 @@ public class WillowModelProvider extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         // TODO: there are options for dyeable overlay and tinted overlay, sounds cool
         itemModelGenerator.register(WillowItems.THE_HERALD, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.JOURNEYMANS_LOGBOOK, Models.GENERATED);
     }
 
 }

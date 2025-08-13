@@ -7,6 +7,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import phi.willow.Willow;
+import phi.willow.items.JourneymansLogbookItem;
 import phi.willow.items.SledgeHammerItem;
 import phi.willow.items.TheHeraldItem;
 
@@ -31,7 +32,7 @@ public class WillowItems {
 
     // Items
     // TODO: all data files
-    public static final Item JOURNEYMANS_LOGBOOK = register("journeymans_logbook", Item::new, new Item.Settings().maxCount(1));
+    public static final Item JOURNEYMANS_LOGBOOK = register("journeymans_logbook", JourneymansLogbookItem::new, new Item.Settings());
 
     // Food
 

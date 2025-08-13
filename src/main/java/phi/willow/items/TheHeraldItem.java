@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -16,9 +17,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -45,6 +49,31 @@ public class TheHeraldItem extends AxeItem {
             if (stack.isOf(WillowItems.THE_HERALD))
                 this.afterBreakBlock(world, player, pos, state, blockEntity, stack);
         });
+    }
+
+    public static void tryCreateHerald(ItemEntity destroyed)
+    {
+        // FIXME: only works 10% of the time
+        World world = destroyed.getWorld();
+        if (world.isClient)
+            return;
+        if (destroyed.getStack().isOf(Items.GOLDEN_AXE)
+                && !world.getEntitiesByType(EntityType.LIGHTNING_BOLT, Box.of(destroyed.getPos(), 1, 1, 1), (lightningEntity) -> true).isEmpty())
+        {
+            final int requiredShards = 3;
+            List<ItemEntity> echoShards = world.getEntitiesByClass(ItemEntity.class, Box.of(destroyed.getPos(), 1, 1, 1), itemEntity -> itemEntity.getStack().isOf(Items.ECHO_SHARD));
+            for (ItemEntity shard : echoShards)
+            {
+                if (shard.getStack().getCount() >= requiredShards)
+                {
+                    TickTimers.schedule(() -> {
+                        ItemEntity herald = new ItemEntity(world, destroyed.getBlockX(), destroyed.getBlockY(), destroyed.getBlockZ(), new ItemStack(WillowItems.THE_HERALD));
+                        world.spawnEntity(herald);
+                        world.playSound(herald, herald.getBlockPos(), SoundEvents.ENTITY_WITHER_SPAWN, SoundCategory.PLAYERS);
+                    }, 10);
+                }
+            }
+        }
     }
 
     private void afterBreakBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack stack)

@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-
+    "#minecraft:dark_oak_logs",
+    "#minecraft:cherry_logs",
+    "#minecraft:mangrove_logs"
   ]
 }

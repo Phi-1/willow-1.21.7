@@ -3,6 +3,8 @@
   "package": "phi.willow.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "AbstractBlockStateAccessor",
+    "AbstractBlockStateMixin",
     "BlocksMixin",
     "ItemMixin",
     "PlayerEntityMixin"

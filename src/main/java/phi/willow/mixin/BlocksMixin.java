@@ -15,7 +15,7 @@ import java.util.Objects;
 import java.util.function.Function;
 
 @Mixin(Blocks.class)
-public class BlocksMixin {
+public abstract class BlocksMixin {
 
     @Shadow
     private static RegistryKey<Block> keyOf(String id) { return null; }

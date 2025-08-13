@@ -16,5 +16,6 @@ public class WillowLanguageProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add(WillowItems.THE_HERALD, "The Herald");
+        translationBuilder.add(WillowItems.JOURNEYMANS_LOGBOOK, "Journeyman's Logbook");
     }
 }

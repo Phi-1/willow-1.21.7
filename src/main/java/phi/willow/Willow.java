@@ -38,6 +38,8 @@ public class Willow implements ModInitializer {
 	// TODO: leaves drop sticks
 	// TODO: block tool level requirements for drops
 	// TODO: don't forget to add new tools to base minecraft tags, sledgehammer to pickaxes.json and such
+	// TODO: importing client classes crashes server, do a check
+	// TODO: tool heads and tool handle, because you can't craft a crafting table before flint tools
 
 	public static final String MOD_ID = "willow";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
