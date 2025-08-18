@@ -28,14 +28,12 @@ public class Willow implements ModInitializer {
 	// TODO: feedback on profession levelup with sound
 	// TODO: match blocks in gives_{profession}_xp tag with needs_{tier}_tool tag, store in ram for quick read, so xp quick to calc
 	// ^ though BlockState.isIn() derives from java.Set, so maybe that's pretty fast already
-	// TODO: add custom tools to minecraft item tags for tools
 	// TODO: sync player state data on xp gain
 	// TODO: Item#onItemEntityDestroyed is a really cool event for custom crafting shenanigans
 	// TODO: flint tool recipes
 	// TODO: tooltips for profession level requirements
 	// TODO: block trident throwing unless proficient
 	// TODO: HUD indicators when holding/wearing stuff you dont have proficiency for?
-	// TODO: leaves drop sticks
 	// TODO: block tool level requirements for drops
 	// TODO: don't forget to add new tools to base minecraft tags, sledgehammer to pickaxes.json and such
 	// TODO: importing client classes crashes server, do a check

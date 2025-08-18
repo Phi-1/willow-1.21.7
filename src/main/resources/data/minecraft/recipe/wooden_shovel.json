@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "flint_shovel",
+  "ingredients": [
+    "willow:flint_shovel_head",
+    "willow:tool_handle"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:wooden_shovel"
+  }
+}

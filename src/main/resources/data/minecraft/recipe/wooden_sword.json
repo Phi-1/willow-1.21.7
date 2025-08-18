@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "flint_knife",
+  "ingredients": [
+    "willow:flint_blade",
+    "willow:tool_handle"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:wooden_sword"
+  }
+}

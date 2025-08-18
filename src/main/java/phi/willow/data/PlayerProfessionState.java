@@ -28,6 +28,7 @@ public class PlayerProfessionState {
         }
     }
     public void setXP(Profession profession, int amount) {
+        // TODO: sync
         xpPerProfession.set(profession.ordinal(), amount);
     }
 
@@ -39,8 +40,12 @@ public class PlayerProfessionState {
 
     public record PlayerProfessionStatePayload(PlayerProfessionState state) implements CustomPayload
     {
-        public static final CustomPayload.Id<PlayerProfessionStatePayload> ID = new CustomPayload.Id<>(WillowNetworking.PLAYER_PROFESSION_STATE_PACKET_ID);
-        public static final PacketCodec<RegistryByteBuf, PlayerProfessionStatePayload> PACKET_CODEC = PacketCodec.tuple(PacketCodecs.codec(PlayerProfessionState.CODEC), PlayerProfessionStatePayload::state, PlayerProfessionStatePayload::new);
+        public static final CustomPayload.Id<PlayerProfessionStatePayload> ID = new CustomPayload.Id<>(WillowNetworking.PLAYER_PROFESSION_STATE_SYNC_PACKET_ID);
+        public static final PacketCodec<RegistryByteBuf, PlayerProfessionStatePayload> PACKET_CODEC = PacketCodec.tuple(
+                PacketCodecs.codec(PlayerProfessionState.CODEC),
+                PlayerProfessionStatePayload::state,
+                PlayerProfessionStatePayload::new
+        );
 
         @Override
         public Id<? extends CustomPayload> getId() {

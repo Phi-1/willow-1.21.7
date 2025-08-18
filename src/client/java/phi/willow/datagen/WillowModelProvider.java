@@ -23,6 +23,16 @@ public class WillowModelProvider extends FabricModelProvider {
         // TODO: there are options for dyeable overlay and tinted overlay, sounds cool
         itemModelGenerator.register(WillowItems.THE_HERALD, Models.GENERATED);
         itemModelGenerator.register(WillowItems.JOURNEYMANS_LOGBOOK, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.SLEDGEHAMMER, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.HAMMER_OF_THE_DEEP, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.EXCAVATOR, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.KINDLING, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.TOOL_HANDLE, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.FLINT_HOE_HEAD, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.FLINT_SHOVEL_HEAD, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.FLINT_AXE_HEAD, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.FLINT_BLADE, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.FLINT_PICKAXE_HEAD, Models.GENERATED);
     }
 
 }

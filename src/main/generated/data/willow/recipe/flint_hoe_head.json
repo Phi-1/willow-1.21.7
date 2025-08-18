@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "flint_hoe_head",
+  "key": {
+    "f": "minecraft:flint"
+  },
+  "pattern": [
+    "ff"
+  ],
+  "result": {
+    "count": 1,
+    "id": "willow:flint_hoe_head"
+  }
+}

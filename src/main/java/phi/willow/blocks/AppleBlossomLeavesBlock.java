@@ -21,7 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
-import phi.willow.util.BlockPosUtil;
+import phi.willow.util.BlockUtil;
 import sereneseasons.api.season.Season;
 import sereneseasons.api.season.SeasonHelper;
 
@@ -67,7 +67,7 @@ public class AppleBlossomLeavesBlock extends TintedParticleLeavesBlock {
 
     private void tryGrowApples(World world, BlockPos pos, BlockState state) {
         // Only grow apples if an adjacent position is empty
-        for (BlockPos checkPos : BlockPosUtil.getAdjacent(pos))
+        for (BlockPos checkPos : BlockUtil.getAdjacent(pos))
         {
             if (world.getBlockState(checkPos).isReplaceable())
             {

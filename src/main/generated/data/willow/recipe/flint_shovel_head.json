@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "flint_shovel_head",
+  "key": {
+    "f": "minecraft:flint"
+  },
+  "pattern": [
+    "f",
+    "f"
+  ],
+  "result": {
+    "count": 1,
+    "id": "willow:flint_shovel_head"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "tool_handle",
+  "key": {
+    "s": "minecraft:stick"
+  },
+  "pattern": [
+    " s ",
+    " s "
+  ],
+  "result": {
+    "count": 1,
+    "id": "willow:tool_handle"
+  }
+}

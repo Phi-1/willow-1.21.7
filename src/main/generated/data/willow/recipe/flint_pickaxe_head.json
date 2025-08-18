@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "flint_pickaxe_head",
+  "key": {
+    "f": "minecraft:flint"
+  },
+  "pattern": [
+    " f",
+    "ff"
+  ],
+  "result": {
+    "count": 1,
+    "id": "willow:flint_pickaxe_head"
+  }
+}

@@ -3,7 +3,9 @@ package phi.willow.items;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.component.type.ToolComponent;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -44,6 +46,7 @@ public class TheHeraldItem extends AxeItem {
         super(WillowToolMaterials.THE_HERALD, 7.0f, -3.0f, settings
                 .fireproof()
                 .rarity(Rarity.EPIC));
+        // TODO: just use postmine
         PlayerBlockBreakEvents.AFTER.register((world, player, pos, state, blockEntity) -> {
             ItemStack stack = player.getMainHandStack();
             if (stack.isOf(WillowItems.THE_HERALD))
@@ -89,13 +92,20 @@ public class TheHeraldItem extends AxeItem {
 
     private void chopLogsAround(BlockPos pos, World world, ItemStack axe, PlayerEntity player)
     {
+        ToolComponent toolComponent = axe.get(DataComponentTypes.TOOL);
+        if (toolComponent == null)
+        {
+            Willow.LOGGER.error("Herald has no tool component");
+            return;
+        }
         for (BlockPos checkPos : BlockPos.iterateOutwards(pos, 1, 1, 1))
         {
             BlockState state = world.getBlockState(checkPos);
             if (state.isIn(BlockTags.LOGS))
             {
+                // TODO: replace with playermanager#trybreakblock, and remove event invocation
                 world.breakBlock(checkPos, true, player);
-                axe.damage(1, player);
+                axe.damage(toolComponent.damagePerBlock(), player);
                 PlayerBlockBreakEvents.AFTER.invoker().afterBlockBreak(world, player, checkPos, state, null);
             }
         }
@@ -110,7 +120,8 @@ public class TheHeraldItem extends AxeItem {
         if (cooldownManager.isCoolingDown(stack))
             return;
         final int effectRadius = 8;
-        final int bonusBolts = 1;
+        final int bonusBolts = 2;
+        // NOTE: keep above 10 ticks so iframes settle
         final int effectDelayTicks = 12;
         List<MobEntity> mobs = target.getWorld().getEntitiesByClass(MobEntity.class, Box.of(target.getEyePos(), effectRadius, effectRadius, effectRadius), mob -> true);
         for (int i = 0; i < mobs.size() + bonusBolts; i++)

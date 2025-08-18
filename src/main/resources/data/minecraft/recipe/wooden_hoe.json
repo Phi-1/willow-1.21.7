@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "flint_hoe",
+  "ingredients": [
+    "willow:flint_hoe_head",
+    "willow:tool_handle"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:wooden_hoe"
+  }
+}

@@ -1,6 +1,7 @@
 {
   "values": [
-    "#willow:expert_usable_tools",
+    "#willow:expert_usable_equipment",
+
     "minecraft:diamond_pickaxe",
     "minecraft:diamond_axe",
     "minecraft:diamond_shovel",
@@ -22,6 +23,7 @@
     "minecraft:netherite_boots",
 
     "minecraft:mace",
-    "willow:the_herald"
+    "willow:the_herald",
+    "willow:hammer_of_the_deep"
   ]
 }

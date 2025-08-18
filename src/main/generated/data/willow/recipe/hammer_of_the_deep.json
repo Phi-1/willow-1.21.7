@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "hammer_of_the_deep",
+  "key": {
+    "d": "minecraft:diamond",
+    "e": "minecraft:echo_shard",
+    "h": "willow:sledgehammer",
+    "s": "minecraft:stick"
+  },
+  "pattern": [
+    "ede",
+    "dhd",
+    " s "
+  ],
+  "result": {
+    "count": 1,
+    "id": "willow:hammer_of_the_deep"
+  }
+}

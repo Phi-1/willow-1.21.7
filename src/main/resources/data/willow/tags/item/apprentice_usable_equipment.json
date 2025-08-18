@@ -1,6 +1,7 @@
 {
   "values": [
-    "#willow:novice_usable_tools",
+    "#willow:novice_usable_equipment",
+
     "minecraft:stone_pickaxe",
     "minecraft:stone_axe",
     "minecraft:stone_shovel",

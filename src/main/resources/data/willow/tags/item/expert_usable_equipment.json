@@ -1,6 +1,6 @@
 {
   "values": [
-    "#willow:apprentice_usable_tools",
+    "#willow:apprentice_usable_equipment",
 
     "minecraft:iron_pickaxe",
     "minecraft:iron_axe",
@@ -22,6 +22,8 @@
     "minecraft:golden_leggings",
     "minecraft:golden_boots",
 
-    "minecraft:trident"
+    "minecraft:trident",
+    "willow:excavator",
+    "willow:sledgehammer"
   ]
 }

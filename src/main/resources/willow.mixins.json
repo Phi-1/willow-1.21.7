@@ -6,8 +6,9 @@
     "AbstractBlockStateAccessor",
     "AbstractBlockStateMixin",
     "BlocksMixin",
-    "ItemMixin",
-    "PlayerEntityMixin"
+    "HoeItemMixin",
+    "PlayerEntityMixin",
+    "ServerPlayerInteractionManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

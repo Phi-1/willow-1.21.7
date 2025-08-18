@@ -31,7 +31,7 @@ import phi.willow.util.ProfessionUtil;
 public abstract class PlayerEntityMixin {
 
     @Unique
-    private static final float REDUCED_MINING_SPEED = 0.2f;
+    private static final float REDUCED_MINING_SPEED = 0.1f;
     @Unique
     private static final float ATTACK_SPEED_FACTOR = 3.0f;
 
@@ -57,7 +57,7 @@ public abstract class PlayerEntityMixin {
             return;
         ProfessionLevel level = ProfessionLevel.NOVICE;
         boolean isTool = false;
-        if (heldItem.isIn(ItemTags.PICKAXES)) {
+        if (heldItem.isIn(ItemTags.PICKAXES) || heldItem.isIn(ItemTags.SHOVELS)) {
             isTool = true;
             level = ProfessionUtil.getProfessionLevel(self(), Profession.MINING);
         }

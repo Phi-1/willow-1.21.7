@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "flint_axe_head",
+  "key": {
+    "f": "minecraft:flint"
+  },
+  "pattern": [
+    "ff",
+    "f "
+  ],
+  "result": {
+    "count": 1,
+    "id": "willow:flint_axe_head"
+  }
+}
