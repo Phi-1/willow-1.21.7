@@ -1,4 +1,5 @@
 // 1.21.7	-999999999-01-01T00:00:00	Willow/WillowRecipeGenerator
+ad2700b7faa31c62839dd6e08f4f88b64744c2ce data/willow/advancement/recipes/brewing/golden_beetroot.json
 a0b1393f63617d1358ebcd665e31dedcfeff07a7 data/willow/advancement/recipes/combat/flint_blade.json
 5ac2e437c33154a9b09722ab883c0a2de23633f0 data/willow/advancement/recipes/misc/journeymans_logbook.json
 4b00b07a6bfc1b6f6cb51530c6ab039928adcbfa data/willow/advancement/recipes/misc/kindling.json
@@ -14,6 +15,7 @@ e997167e92ce71d1dcf0d61501a0f68c63eb2ba7 data/willow/advancement/recipes/tools/t
 739f175e124b5d43a2c920a0cc156e5f89be9331 data/willow/recipe/flint_hoe_head.json
 7a4bb4d738198702c4bf88f2a43ee4e9c0f15eed data/willow/recipe/flint_pickaxe_head.json
 34b28c618ae1421798ea1864a1b1fa725bbacbaf data/willow/recipe/flint_shovel_head.json
+32ee1e1198f03a7163d2d49c278a37da8f5f569c data/willow/recipe/golden_beetroot.json
 6ab08000233863ec76e4f81adddb961bb6bc7ffc data/willow/recipe/hammer_of_the_deep.json
 2336e80c0a47bcc0dea3fbec45896fb24cc76f40 data/willow/recipe/journeymans_logbook.json
 8097aceab5830a08a6e6efc5477919c14410d87a data/willow/recipe/kindling.json

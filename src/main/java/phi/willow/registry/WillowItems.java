@@ -70,6 +70,9 @@ public class WillowItems {
     public static final Item JOURNEYMANS_LOGBOOK = register("journeymans_logbook", JourneymansLogbookItem::new, new Item.Settings());
     public static final Item KINDLING = register("kindling", Item::new, new Item.Settings());
 
+    // Ingredients
+    public static final Item GOLDEN_BEETROOT = register("golden_beetroot", Item::new, new Item.Settings());
+
     // Food
     // Manuals
     public static final Item APPRENTICE_MINING_MANUAL = register("apprentice_mining_manual", settings -> new BaseManualItem(settings, Profession.MINING, ProfessionLevel.APPRENTICE), new Item.Settings());

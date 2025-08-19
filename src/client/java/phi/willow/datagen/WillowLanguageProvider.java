@@ -2,9 +2,11 @@ package phi.willow.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import phi.willow.Willow;
+import phi.willow.registry.WillowEffectsAndPotions;
 import phi.willow.registry.WillowItems;
 
 import java.util.concurrent.CompletableFuture;
@@ -17,11 +19,24 @@ public class WillowLanguageProvider extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
+        translationBuilder.add(WillowEffectsAndPotions.LIGHTNING_RESISTANCE.value(), "Lightning Resistance");
+        translationBuilder.add(WillowEffectsAndPotions.REACH.value(), "Reach");
+
+        translationBuilder.add(Identifier.of("item.minecraft", "potion.effect.builders_potion"), "Builder's Potion");
+        translationBuilder.add(Identifier.of("item.minecraft", "potion.effect.builders_potion_long"), "Builder's Potion");
+        translationBuilder.add(Identifier.of("item.minecraft", "potion.effect.builders_potion_strong"), "Builder's Potion");
+
+        translationBuilder.add(Identifier.of("item.minecraft", "potion.effect.miners_potion"), "Miner's Potion");
+        translationBuilder.add(Identifier.of("item.minecraft", "potion.effect.miners_potion_long"), "Miner's Potion");
+        translationBuilder.add(Identifier.of("item.minecraft", "potion.effect.miners_potion_strong"), "Miner's Potion");
+
         translationBuilder.add(WillowItems.THE_HERALD, "The Herald");
         translationBuilder.add(WillowItems.SLEDGEHAMMER, "Sledgehammer");
         translationBuilder.add(WillowItems.HAMMER_OF_THE_DEEP, "Hammer of the Deep");
         translationBuilder.add(WillowItems.EXCAVATOR, "Excavator");
+
         translationBuilder.add(WillowItems.KINDLING, "Kindling");
+        translationBuilder.add(WillowItems.GOLDEN_BEETROOT, "Golden Beetroot");
 
         translationBuilder.add(WillowItems.TOOL_HANDLE, "Tool Handle");
         translationBuilder.add(WillowItems.FLINT_AXE_HEAD, "Flint Axe Head");

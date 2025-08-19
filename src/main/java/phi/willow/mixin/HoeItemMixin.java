@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
@@ -40,7 +41,7 @@ public class HoeItemMixin {
             return;
         BlockPos pos = context.getBlockPos();
         // TODO: check if clicked block is a crop, else till soil in aoe -> only till one if shift clicking?
-        if (player.getWorld().isClient)
+        if (!(player instanceof ServerPlayerEntity serverPlayer))
         {
             cir.setReturnValue(ActionResult.SUCCESS);
             return;
@@ -71,10 +72,10 @@ public class HoeItemMixin {
             player.getWorld().breakBlock(harvestPos, true);
             player.getWorld().setBlockState(harvestPos, state.with(age, 0));
             // TODO: find good damage value
-            final int damagePerCrop = 9;
+            final int damagePerCrop = 6;
             // NOTE: item#damage already takes into account unbreaking
             stack.damage(damagePerCrop, player);
-            // TODO: profession xp
+            ProfessionUtil.increaseXP(Profession.FARMING, serverPlayer,false);
         }
         cir.setReturnValue(ActionResult.SUCCESS);
     }

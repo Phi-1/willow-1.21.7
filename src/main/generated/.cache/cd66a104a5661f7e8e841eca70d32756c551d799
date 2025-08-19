@@ -13,6 +13,7 @@ ebbb0cdbec9e1083596f1b97287ea109d9c9c51c assets/willow/items/flint_blade.json
 d2a3542f7c3fad144986db4a49d2cd4423bbb8e2 assets/willow/items/flint_hoe_head.json
 8ada0859834b30f3ea505d85ea8f02c57ecb317f assets/willow/items/flint_pickaxe_head.json
 8e421287c13f4d8529c4ef414585d419a1072649 assets/willow/items/flint_shovel_head.json
+01406e839fa53a4cf84dc5eaafa6e400b61d8875 assets/willow/items/golden_beetroot.json
 4b794f1509a61247f4fd435d5d1a70fc7ace73a3 assets/willow/items/hammer_of_the_deep.json
 88c3d41f580e14c38066e1227c00b3f20c42142c assets/willow/items/journeymans_logbook.json
 a71b8c43c4c52701d3099d26744f31943bff74ab assets/willow/items/kindling.json
@@ -37,6 +38,7 @@ c95236066fb5bc327f14d402703e71d5fd21fb62 assets/willow/models/item/flint_blade.j
 704a0084f338efa04bb29bf81b2ccad4dfa026ff assets/willow/models/item/flint_hoe_head.json
 e9e17b0e9f7e1b978eea47ebc7cc80aff99d5c39 assets/willow/models/item/flint_pickaxe_head.json
 eb3b3985ecd1b58d098500b58b265effef925cb7 assets/willow/models/item/flint_shovel_head.json
+e8ea781f352509111b18c68f13b06383951bd5ef assets/willow/models/item/golden_beetroot.json
 75a2898be45169dafd04495f20c8d2dc591c33a5 assets/willow/models/item/hammer_of_the_deep.json
 e94a3937010a6c1573b9fc17ff75a49a1568006c assets/willow/models/item/journeymans_logbook.json
 f83a496eff60524f5c8b08a08639b6f2f91145c5 assets/willow/models/item/kindling.json

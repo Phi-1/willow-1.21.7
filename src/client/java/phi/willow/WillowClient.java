@@ -3,15 +3,14 @@ package phi.willow;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElement;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
-import net.fabricmc.fabric.impl.client.rendering.hud.HudElementRegistryImpl;
-import net.fabricmc.fabric.impl.client.rendering.hud.HudLayer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import oshi.util.tuples.Pair;
+import net.minecraft.world.World;
 import phi.willow.clienthooks.ScreenOpeningHooks;
 import phi.willow.data.PlayerProfessionState;
 import phi.willow.data.Profession;
@@ -22,8 +21,8 @@ import phi.willow.rendering.XPPopupRenderer;
 import phi.willow.screens.LogbookScreen;
 import phi.willow.util.ProfessionUtil;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WillowClient implements ClientModInitializer {
 	@Override
@@ -57,9 +56,9 @@ public class WillowClient implements ClientModInitializer {
      *
      * @return A mapping from each profession to the difference in xp with the old state, and whether it leveled up
      */
-    private Map<Profession, Pair<Integer, Boolean>> computeDifference(PlayerProfessionState newState)
+    private List<XPDiff> computeDifference(PlayerProfessionState newState)
     {
-        Map<Profession, Pair<Integer, Boolean>> differences = new HashMap<>();
+        List<XPDiff> differences = new ArrayList<>();
         PlayerProfessionState oldState = SyncedProfessionState.state;
         PlayerEntity player = MinecraftClient.getInstance().player;
         for (Profession profession : Profession.values())
@@ -68,21 +67,33 @@ public class WillowClient implements ClientModInitializer {
             ProfessionLevel oldLevel = ProfessionUtil.getProfessionLevel(player, profession);
             int newXP = newState.getXP(profession);
             ProfessionLevel newLevel = ProfessionUtil.getLevelForXPValue(newXP);
-            differences.put(profession, new Pair<>(newXP - oldXP, newLevel != oldLevel));
+            int xpDiff = newXP - oldXP;
+            if (xpDiff > 0)
+                differences.add(new XPDiff(profession, newLevel, xpDiff, oldLevel != newLevel));
         }
         return differences;
     }
 
-    private void handleXPGain(Map<Profession, Pair<Integer, Boolean>> diff)
+    private void handleXPGain(List<XPDiff> differences)
     {
-    // TODO
-        XPPopupRenderer.createPopup(Profession.FARMING, ProfessionLevel.MASTER);
+        boolean handleLevelup = false;
+        for (XPDiff diff : differences)
+        {
+            // Stop showing popups at max level
+            if (diff.level != ProfessionLevel.MASTER)
+                XPPopupRenderer.createPopup(diff.profession, diff.level);
+            if (diff.isLevelup)
+                handleLevelup = true;
+        }
+        World world = MinecraftClient.getInstance().world;
+        if (world != null && handleLevelup)
+            world.playSoundClient(SoundEvents.GOAT_HORN_SOUNDS.get((int) (Math.random() * SoundEvents.GOAT_HORN_SOUND_COUNT)).value(), SoundCategory.UI, 1.0f, 1.0f);
     }
 
 	private void initializeClientHooks()
 	{
-		ScreenOpeningHooks.openLogbookScreen = () -> {
-			MinecraftClient.getInstance().setScreen(new LogbookScreen());
-		};
+		ScreenOpeningHooks.openLogbookScreen = () -> MinecraftClient.getInstance().setScreen(new LogbookScreen());
 	}
+
+    private record XPDiff(Profession profession, ProfessionLevel level, int xpDiff, boolean isLevelup) {}
 }

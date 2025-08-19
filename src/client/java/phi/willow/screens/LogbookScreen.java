@@ -23,6 +23,8 @@ public class LogbookScreen extends Screen {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
         super.render(context, mouseX, mouseY, deltaTicks);
+        // TODO: draw xp icon with size equal to font height on button, see if placing underscore character underneath works for creating size, then make button text green
+        // TODO: update or reopen screen after clicking button / confirming levelup, so you cant click it twice
         final int marginLeft = 40;
         final int paddingText = 10;
         // Minecraft doesn't have a "label" widget, so we'll have to draw our own text.

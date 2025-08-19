@@ -53,6 +53,16 @@ public class WillowRecipeProvider extends FabricRecipeProvider {
                         .group("kindling")
                         .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
                         .offerTo(exporter);
+                // Golden Beetroot
+                createShaped(RecipeCategory.BREWING, WillowItems.GOLDEN_BEETROOT, 1)
+                        .pattern("nnn")
+                        .pattern("nbn")
+                        .pattern("nnn")
+                        .input('n', Items.GOLD_NUGGET)
+                        .input('b', Items.BEETROOT)
+                        .group("golden_beetroot")
+                        .criterion(hasItem(Items.GOLD_NUGGET), conditionsFromItem(Items.GOLD_NUGGET))
+                        .offerTo(exporter);
                 // Journeyman's Logbook
                 createShapeless(RecipeCategory.MISC, WillowItems.JOURNEYMANS_LOGBOOK, 1)
                         .input(WillowItems.TOOL_HANDLE, 1)

@@ -1,9 +1,9 @@
 package phi.willow.data;
 
 public enum ProfessionLevel {
-    NOVICE(1, "Novice"),
-    APPRENTICE(1, "Apprentice"),
-    EXPERT(1, "Expert"),
+    NOVICE(3 * 64, "Novice"),
+    APPRENTICE(3 * 27 * 64, "Apprentice"),
+    EXPERT(15 * 27 * 64, "Expert"),
     MASTER(0, "Master");
 
     public final String label;

@@ -1,5 +1,6 @@
 package phi.willow.registry;
 
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
@@ -7,11 +8,16 @@ import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.loot.v3.LootTableSource;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FuelRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -22,12 +28,15 @@ import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.village.TradeOffers;
+import net.minecraft.world.World;
 import phi.willow.Willow;
 import phi.willow.data.PlayerProfessionState;
 import phi.willow.data.Profession;
@@ -48,23 +57,8 @@ public class WillowEvents {
         LootTableEvents.MODIFY.register(WillowEvents::addHeraldDrop);
         FuelRegistryEvents.BUILD.register(WillowEvents::registerFuelItems);
         TradeOfferHelper.registerWanderingTraderOffers(WillowEvents::addWanderingTraderTrades);
-
-        // TODO: xp stuff
-        PlayerBlockBreakEvents.AFTER.register((world, player, pos, blockState, blockEntity) -> {
-            if (world.isClient)
-                return;
-            MinecraftServer server = world.getServer();
-            if (server == null)
-                return;
-            WillowPersistentState state = WillowPersistentState.getServerState(server);
-            state.getTestData().testNumber++;
-            player.sendMessage(Text.literal(Integer.toString(state.getTestData().testNumber)), true);
-            WillowNetworking.syncPlayerProfessionState((ServerPlayerEntity) player, ProfessionUtil.getPlayerState(player));
-
-            // NOTE: world#breakBlock does not trigger this event
-//            world.breakBlock(pos.down(), true, player);
-            Willow.LOGGER.info(WillowTags.Items.NOVICE_USABLE_EQUIPMENT.toString());
-        });
+        PlayerBlockBreakEvents.AFTER.register(WillowEvents::gainBlockBreakXP);
+        ServerLivingEntityEvents.AFTER_DAMAGE.register(WillowEvents::gainFightingXP);
 
         // TODO: manuals
         LootTableEvents.MODIFY.register(((key, tableBuilder, source, registries) -> {
@@ -86,6 +80,37 @@ public class WillowEvents {
         // TODO: add legendary sword to weaponsmith trades
 
         ServerTickEvents.START_WORLD_TICK.register(WillowEvents::armorProficiencyTick);
+    }
+
+    private static void gainFightingXP(LivingEntity living, DamageSource source, float baseDamageTaken, float damageTaken, boolean blocked)
+    {
+        // Increase xp on block
+        if (living instanceof ServerPlayerEntity player && blocked)
+            ProfessionUtil.increaseXP(Profession.FIGHTING, player, false);
+        // And on damaging another entity
+        else if (source.getAttacker() instanceof ServerPlayerEntity player)
+            ProfessionUtil.increaseXP(Profession.FIGHTING, player, false);
+    }
+
+    private static void gainBlockBreakXP(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity)
+    {
+        if (!(player instanceof ServerPlayerEntity serverPlayer))
+            return;
+        ItemStack stack = player.getMainHandStack();
+        if (!stack.getItem().isCorrectForDrops(stack, state))
+            return;
+        if (stack.isIn(ItemTags.PICKAXES) || stack.isIn(ItemTags.SHOVELS))
+        {
+            if (!ProfessionUtil.canUseToolAtLevel(ProfessionUtil.getProfessionLevel(player, Profession.MINING), stack))
+                return;
+            ProfessionUtil.increaseXP(Profession.MINING, serverPlayer, false);
+        }
+        else if (stack.isIn(ItemTags.AXES))
+        {
+            if (!ProfessionUtil.canUseToolAtLevel(ProfessionUtil.getProfessionLevel(player, Profession.WOODCUTTING), stack))
+                return;
+            ProfessionUtil.increaseXP(Profession.WOODCUTTING, serverPlayer, false);
+        }
     }
 
     private static void addWanderingTraderTrades(TradeOfferHelper.WanderingTraderOffersBuilder builder)

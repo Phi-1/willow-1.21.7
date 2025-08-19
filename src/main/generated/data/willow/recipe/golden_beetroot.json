@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "golden_beetroot",
+  "key": {
+    "b": "minecraft:beetroot",
+    "n": "minecraft:gold_nugget"
+  },
+  "pattern": [
+    "nnn",
+    "nbn",
+    "nnn"
+  ],
+  "result": {
+    "count": 1,
+    "id": "willow:golden_beetroot"
+  }
+}

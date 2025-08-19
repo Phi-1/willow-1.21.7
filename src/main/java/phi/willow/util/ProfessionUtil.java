@@ -87,11 +87,13 @@ public class ProfessionUtil {
         // TODO: don't level up if already max level, also in display don't show required xp at master -> check that requiredForNext = 0
     }
 
-    public static void increaseXP(Profession profession, ServerPlayerEntity player, ProfessionLevel xpSource, boolean goldBonus)
+    public static void increaseXP(Profession profession, ServerPlayerEntity player, boolean goldBonus)
     {
         ProfessionLevel levelBefore = getProfessionLevel(player, profession);
         int goldFactor = goldBonus ? 8 : 1;
-        int xpGain = profession.instanceXP * goldFactor * (xpSource.ordinal() + 1);
+        // TODO: eventually maybe give different amounts of xp based on source, but for now that's too messy
+//        int xpGain = profession.instanceXP * goldFactor * (xpSource.ordinal() + 1);
+        int xpGain = profession.instanceXP * goldFactor;
         PlayerProfessionState state = getPlayerState(player);
         state.setXP(profession, state.getXP(profession) + xpGain);
         // TODO: replace with more specific packet, like was a golden tool used, how much xp increase and in which profession

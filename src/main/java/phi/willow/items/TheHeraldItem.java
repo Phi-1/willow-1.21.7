@@ -4,24 +4,19 @@ import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.component.type.ToolComponent;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.ItemCooldownManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -32,7 +27,7 @@ import net.minecraft.world.World;
 import phi.willow.Willow;
 import phi.willow.data.Profession;
 import phi.willow.data.ProfessionLevel;
-import phi.willow.registry.WillowEffects;
+import phi.willow.registry.WillowEffectsAndPotions;
 import phi.willow.registry.WillowItems;
 import phi.willow.registry.WillowToolMaterials;
 import phi.willow.util.ProfessionUtil;
@@ -127,7 +122,7 @@ public class TheHeraldItem extends AxeItem {
         for (int i = 0; i < mobs.size() + bonusBolts; i++)
         {
             TickTimers.schedule(() -> {
-                player.addStatusEffect(new StatusEffectInstance(WillowEffects.LIGHTNING_RESISTANCE, effectDelayTicks, 1));
+                player.addStatusEffect(new StatusEffectInstance(WillowEffectsAndPotions.LIGHTNING_RESISTANCE, effectDelayTicks, 1));
                 int maxSearches = mobs.size();
                 int searches = 0;
                 while (true)
