@@ -25,9 +25,7 @@ public class TickTimers {
                 toRemove.add(timer);
             }
         }
-        for (TickTimer timer : toRemove) {
-            TIMERS.remove(timer);
-        }
+        TIMERS.removeAll(toRemove);
     }
 
     public static void onServerTick(ServerWorld world) {

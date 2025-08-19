@@ -45,6 +45,7 @@ public class WillowEvents {
     {
         ServerTickEvents.END_WORLD_TICK.register(TickTimers::onServerTick);
         LootTableEvents.MODIFY.register(WillowEvents::addStickDropToLeaves);
+        LootTableEvents.MODIFY.register(WillowEvents::addHeraldDrop);
         FuelRegistryEvents.BUILD.register(WillowEvents::registerFuelItems);
         TradeOfferHelper.registerWanderingTraderOffers(WillowEvents::addWanderingTraderTrades);
 
@@ -58,6 +59,7 @@ public class WillowEvents {
             WillowPersistentState state = WillowPersistentState.getServerState(server);
             state.getTestData().testNumber++;
             player.sendMessage(Text.literal(Integer.toString(state.getTestData().testNumber)), true);
+            WillowNetworking.syncPlayerProfessionState((ServerPlayerEntity) player, ProfessionUtil.getPlayerState(player));
 
             // NOTE: world#breakBlock does not trigger this event
 //            world.breakBlock(pos.down(), true, player);
@@ -119,6 +121,14 @@ public class WillowEvents {
             tableBuilder.pool(LootPool.builder()
                     .with(ItemEntry.builder(Items.STICK))
                     .conditionally(RandomChanceLootCondition.builder(0.1f)));
+        }
+    }
+
+    private static void addHeraldDrop(RegistryKey<LootTable> key, LootTable.Builder tableBuilder, LootTableSource source, RegistryWrapper.WrapperLookup registries)
+    {
+        if (key == LootTables.HERO_OF_THE_VILLAGE_WEAPONSMITH_GIFT_GAMEPLAY)
+        {
+            tableBuilder.pool(LootPool.builder().conditionally(RandomChanceLootCondition.builder(0.2f)).with(ItemEntry.builder(WillowItems.THE_HERALD)));
         }
     }
 

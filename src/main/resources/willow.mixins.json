@@ -6,9 +6,11 @@
     "AbstractBlockStateAccessor",
     "AbstractBlockStateMixin",
     "BlocksMixin",
+    "CropBlockInvoker",
     "HoeItemMixin",
     "PlayerEntityMixin",
-    "ServerPlayerInteractionManagerMixin"
+    "ServerPlayerInteractionManagerMixin",
+    "TridentItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -15,10 +15,9 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import phi.willow.Willow;
-import phi.willow.items.ExcavatorShovelItem;
-import phi.willow.items.JourneymansLogbookItem;
-import phi.willow.items.SledgeHammerItem;
-import phi.willow.items.TheHeraldItem;
+import phi.willow.data.Profession;
+import phi.willow.data.ProfessionLevel;
+import phi.willow.items.*;
 
 import java.util.function.Function;
 
@@ -55,7 +54,6 @@ public class WillowItems {
             new Item.Settings()
     );
 
-    // TODO: recipe
     public static final Item THE_HERALD = register(
             "the_herald",
             TheHeraldItem::new,
@@ -69,11 +67,23 @@ public class WillowItems {
     public static final Item FLINT_SHOVEL_HEAD = register("flint_shovel_head", Item::new, new Item.Settings());
     public static final Item FLINT_HOE_HEAD = register("flint_hoe_head", Item::new, new Item.Settings());
     public static final Item FLINT_BLADE = register("flint_blade", Item::new, new Item.Settings());
-    // TODO: recipe
     public static final Item JOURNEYMANS_LOGBOOK = register("journeymans_logbook", JourneymansLogbookItem::new, new Item.Settings());
     public static final Item KINDLING = register("kindling", Item::new, new Item.Settings());
 
     // Food
+    // Manuals
+    public static final Item APPRENTICE_MINING_MANUAL = register("apprentice_mining_manual", settings -> new BaseManualItem(settings, Profession.MINING, ProfessionLevel.APPRENTICE), new Item.Settings());
+    public static final Item APPRENTICE_WOODCUTTING_MANUAL = register("apprentice_woodcutting_manual", settings -> new BaseManualItem(settings, Profession.WOODCUTTING, ProfessionLevel.APPRENTICE), new Item.Settings());
+    public static final Item APPRENTICE_FARMING_MANUAL = register("apprentice_farming_manual", settings -> new BaseManualItem(settings, Profession.FARMING, ProfessionLevel.APPRENTICE), new Item.Settings());
+    public static final Item APPRENTICE_FIGHTING_MANUAL = register("apprentice_fighting_manual", settings -> new BaseManualItem(settings, Profession.FIGHTING, ProfessionLevel.APPRENTICE), new Item.Settings());
+    public static final Item EXPERT_MINING_MANUAL = register("expert_mining_manual", settings -> new BaseManualItem(settings, Profession.MINING, ProfessionLevel.EXPERT), new Item.Settings());
+    public static final Item EXPERT_WOODCUTTING_MANUAL = register("expert_woodcutting_manual", settings -> new BaseManualItem(settings, Profession.WOODCUTTING, ProfessionLevel.EXPERT), new Item.Settings());
+    public static final Item EXPERT_FARMING_MANUAL = register("expert_farming_manual", settings -> new BaseManualItem(settings, Profession.FARMING, ProfessionLevel.EXPERT), new Item.Settings());
+    public static final Item EXPERT_FIGHTING_MANUAL = register("expert_fighting_manual", settings -> new BaseManualItem(settings, Profession.FIGHTING, ProfessionLevel.EXPERT), new Item.Settings());
+    public static final Item MASTER_MINING_MANUAL = register("master_mining_manual", settings -> new BaseManualItem(settings, Profession.MINING, ProfessionLevel.MASTER), new Item.Settings());
+    public static final Item MASTER_WOODCUTTING_MANUAL = register("master_woodcutting_manual", settings -> new BaseManualItem(settings, Profession.WOODCUTTING, ProfessionLevel.MASTER), new Item.Settings());
+    public static final Item MASTER_FARMING_MANUAL = register("master_farming_manual", settings -> new BaseManualItem(settings, Profession.FARMING, ProfessionLevel.MASTER), new Item.Settings());
+    public static final Item MASTER_FIGHTING_MANUAL = register("master_fighting_manual", settings -> new BaseManualItem(settings, Profession.FIGHTING, ProfessionLevel.MASTER), new Item.Settings());
 
     public static Item register(String name, Function<Item.Settings, Item> itemFactory, Item.Settings settings)
     {

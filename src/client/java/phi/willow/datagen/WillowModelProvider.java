@@ -33,6 +33,18 @@ public class WillowModelProvider extends FabricModelProvider {
         itemModelGenerator.register(WillowItems.FLINT_AXE_HEAD, Models.GENERATED);
         itemModelGenerator.register(WillowItems.FLINT_BLADE, Models.GENERATED);
         itemModelGenerator.register(WillowItems.FLINT_PICKAXE_HEAD, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.APPRENTICE_MINING_MANUAL, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.APPRENTICE_WOODCUTTING_MANUAL, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.APPRENTICE_FARMING_MANUAL, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.APPRENTICE_FIGHTING_MANUAL, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.EXPERT_MINING_MANUAL, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.EXPERT_WOODCUTTING_MANUAL, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.EXPERT_FARMING_MANUAL, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.EXPERT_FIGHTING_MANUAL, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.MASTER_MINING_MANUAL, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.MASTER_WOODCUTTING_MANUAL, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.MASTER_FARMING_MANUAL, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.MASTER_FIGHTING_MANUAL, Models.GENERATED);
     }
 
 }

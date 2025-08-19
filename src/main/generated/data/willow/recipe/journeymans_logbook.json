@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "journeymans_logbook",
+  "ingredients": [
+    "willow:tool_handle",
+    "minecraft:book"
+  ],
+  "result": {
+    "count": 1,
+    "id": "willow:journeymans_logbook"
+  }
+}

@@ -53,6 +53,13 @@ public class WillowRecipeProvider extends FabricRecipeProvider {
                         .group("kindling")
                         .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
                         .offerTo(exporter);
+                // Journeyman's Logbook
+                createShapeless(RecipeCategory.MISC, WillowItems.JOURNEYMANS_LOGBOOK, 1)
+                        .input(WillowItems.TOOL_HANDLE, 1)
+                        .input(Items.BOOK, 1)
+                        .group("journeymans_logbook")
+                        .criterion(hasItem(Items.BOOK), conditionsFromItem(Items.BOOK))
+                        .offerTo(exporter);
                 // Tool Handle
                 createShaped(RecipeCategory.TOOLS, WillowItems.TOOL_HANDLE, 1)
                         .pattern(" s ")

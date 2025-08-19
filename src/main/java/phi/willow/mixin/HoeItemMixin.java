@@ -1,5 +1,6 @@
 package phi.willow.mixin;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -53,10 +55,21 @@ public class HoeItemMixin {
         for (BlockPos harvestPos : harvestPositions)
         {
             BlockState state = player.getWorld().getBlockState(harvestPos);
-            if (!state.isIn(BlockTags.CROPS) || state.get(CropBlock.AGE) < 7)
+            Block block = state.getBlock();
+            if (!(block instanceof CropBlock crop))
+            {
+                // If clicked block isn't a crop, don't continue checking the others
+                // TODO: prolly move this check outside the loop somehow
+                if (harvestPos == pos)
+                    break;
+                continue;
+            }
+            IntProperty age = ((CropBlockInvoker) crop).invokeGetAgeProperty();
+            int maxAge = crop.getMaxAge();
+            if (state.get(age) != maxAge)
                 continue;
             player.getWorld().breakBlock(harvestPos, true);
-            player.getWorld().setBlockState(harvestPos, state.with(CropBlock.AGE, 0));
+            player.getWorld().setBlockState(harvestPos, state.with(age, 0));
             // TODO: find good damage value
             final int damagePerCrop = 9;
             // NOTE: item#damage already takes into account unbreaking
@@ -65,11 +78,4 @@ public class HoeItemMixin {
         }
         cir.setReturnValue(ActionResult.SUCCESS);
     }
-
-    // TODO: move to item mixin since changin this to hoeitemmixin
-//    @Inject(method = "onItemEntityDestroyed", at = @At("HEAD"))
-//    public void createHerald(ItemEntity entity, CallbackInfo ci)
-//    {
-//        TheHeraldItem.tryCreateHerald(entity);
-//    }
 }

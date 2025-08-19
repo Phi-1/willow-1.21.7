@@ -23,7 +23,7 @@ import java.util.Optional;
 
 public class Willow implements ModInitializer {
 
-	// TODO: keep some test feedback on xp gain for a while, to see if any blocks are missing from the list
+    // TODO: xp threshold values
 	// TODO: little tool icon with +number that floats away in corner of screen when breaking block or getting fighting xp?
 	// TODO: feedback on profession levelup with sound
 	// TODO: match blocks in gives_{profession}_xp tag with needs_{tier}_tool tag, store in ram for quick read, so xp quick to calc
@@ -32,7 +32,6 @@ public class Willow implements ModInitializer {
 	// TODO: Item#onItemEntityDestroyed is a really cool event for custom crafting shenanigans
 	// TODO: flint tool recipes
 	// TODO: tooltips for profession level requirements
-	// TODO: block trident throwing unless proficient
 	// TODO: HUD indicators when holding/wearing stuff you dont have proficiency for?
 	// TODO: block tool level requirements for drops
 	// TODO: don't forget to add new tools to base minecraft tags, sledgehammer to pickaxes.json and such

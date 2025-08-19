@@ -21,10 +21,8 @@ public class ProfessionUtil {
         return SyncedProfessionState.state;
     }
 
-    public static ProfessionLevel getProfessionLevel(PlayerEntity player, Profession profession)
+    public static ProfessionLevel getLevelForXPValue(int xp)
     {
-        PlayerProfessionState state = getPlayerState(player);
-        int xp = state.getXP(profession);
         ProfessionLevel level = ProfessionLevel.NOVICE;
         int requiredXP = 0;
         for (int i = 0; i < ProfessionLevel.values().length; i++)
@@ -35,6 +33,13 @@ public class ProfessionUtil {
                 break;
         }
         return level;
+    }
+
+    public static ProfessionLevel getProfessionLevel(PlayerEntity player, Profession profession)
+    {
+        PlayerProfessionState state = getPlayerState(player);
+        int xp = state.getXP(profession);
+        return getLevelForXPValue(xp);
     }
 
     public static boolean canUseToolAtLevel(ProfessionLevel level, ItemStack tool)
