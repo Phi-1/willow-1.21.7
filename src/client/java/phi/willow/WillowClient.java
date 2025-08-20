@@ -39,6 +39,8 @@ public class WillowClient implements ClientModInitializer {
 		});
 
 		ItemTooltipCallback.EVENT.register((stack, context, type, lines) -> {
+            PlayerEntity player = MinecraftClient.getInstance().player;
+            // TODO: color text red if level is too high
 			if (stack.isIn(WillowTags.Items.NOVICE_USABLE_EQUIPMENT))
 				lines.add(Text.translatable("willow.profession_tooltip_novice").withColor(0x93e2b4));
 			else if (stack.isIn(WillowTags.Items.APPRENTICE_USABLE_EQUIPMENT))
@@ -87,7 +89,7 @@ public class WillowClient implements ClientModInitializer {
         }
         World world = MinecraftClient.getInstance().world;
         if (world != null && handleLevelup)
-            world.playSoundClient(SoundEvents.GOAT_HORN_SOUNDS.get((int) (Math.random() * SoundEvents.GOAT_HORN_SOUND_COUNT)).value(), SoundCategory.UI, 1.0f, 1.0f);
+            world.playSoundClient(SoundEvents.GOAT_HORN_SOUNDS.get(2).value(), SoundCategory.UI, 1.0f, 1.0f);
     }
 
 	private void initializeClientHooks()

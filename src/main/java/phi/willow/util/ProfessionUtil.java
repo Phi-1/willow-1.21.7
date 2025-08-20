@@ -2,11 +2,8 @@ package phi.willow.util;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.network.packet.Packet;
 import net.minecraft.server.network.ServerPlayerEntity;
+import phi.willow.Willow;
 import phi.willow.data.*;
 import phi.willow.registry.WillowNetworking;
 import phi.willow.registry.WillowTags;
@@ -19,6 +16,17 @@ public class ProfessionUtil {
         if (player instanceof ServerPlayerEntity serverPlayer)
             return WillowPersistentState.getServerState(serverPlayer.getServer()).getPlayerProfessionState().getPlayerState(serverPlayer);
         return SyncedProfessionState.state;
+    }
+
+    public static void setPlayerState(PlayerEntity player, PlayerProfessionState state)
+    {
+        if (player instanceof ServerPlayerEntity serverPlayer)
+        {
+            // TODO: for some reason this function is necessary. I thought state would just be passed by reference, but this function fixes bugs so apparently not. Why though?
+            WillowPersistentState.getServerState(serverPlayer.getServer()).getPlayerProfessionState().setPlayerState(serverPlayer, state);
+            return;
+        }
+        SyncedProfessionState.state = state;
     }
 
     public static ProfessionLevel getLevelForXPValue(int xp)
@@ -42,6 +50,20 @@ public class ProfessionUtil {
         return getLevelForXPValue(xp);
     }
 
+    public static int getXPTowardsNextLevel(PlayerEntity player, Profession profession)
+    {
+        PlayerProfessionState state = getPlayerState(player);
+        ProfessionLevel level = getProfessionLevel(player, profession);
+        int xp = state.getXP(profession);
+        for (ProfessionLevel check : ProfessionLevel.values())
+        {
+            if (check.ordinal() >= level.ordinal())
+                break;
+            xp -= check.xpToNext;
+        }
+        return xp;
+    }
+
     public static boolean canUseToolAtLevel(ProfessionLevel level, ItemStack tool)
     {
         return switch (level)
@@ -63,28 +85,16 @@ public class ProfessionUtil {
         throw new IllegalStateException("Tried to read profession level for item that has none. This may be a bug in your code, or maybe you just forgot to add this item to the proper tag file: " + tool);
     }
 
-    public static void levelUp(Profession profession, ServerPlayerEntity player, boolean onlyAddRequiredXP)
+    public static void levelUpWithPlayerLevels(Profession profession, ServerPlayerEntity player)
     {
         PlayerProfessionState state = getPlayerState(player);
         ProfessionLevel level = getProfessionLevel(player, profession);
-        int xp = state.getXP(profession);
-        int totalXpForNext = 0;
-        if (onlyAddRequiredXP)
-        {
-            for (int i = 0; i <= level.ordinal(); i++)
-            {
-                totalXpForNext += ProfessionLevel.values()[i].xpToNext;
-            }
-            int requiredXP = totalXpForNext - xp;
-            state.setXP(profession, xp + requiredXP);
-            // TODO: levelup event?
-        }
-        else
-        {
-            state.setXP(profession, xp + level.xpToNext);
-            // TODO: levelup event
-        }
-        // TODO: don't level up if already max level, also in display don't show required xp at master -> check that requiredForNext = 0
+        if (level.playerLevelsToNext == 0 || player.experienceLevel < level.playerLevelsToNext)
+            return;
+        player.setExperienceLevel(player.experienceLevel - level.playerLevelsToNext);
+        state.setXP(profession, state.getXP(profession) + level.xpToNext);
+        setPlayerState(player, state);
+        WillowNetworking.syncPlayerProfessionState(player, state);
     }
 
     public static void increaseXP(Profession profession, ServerPlayerEntity player, boolean goldBonus)
@@ -96,6 +106,7 @@ public class ProfessionUtil {
         int xpGain = profession.instanceXP * goldFactor;
         PlayerProfessionState state = getPlayerState(player);
         state.setXP(profession, state.getXP(profession) + xpGain);
+        setPlayerState(player, state);
         // TODO: replace with more specific packet, like was a golden tool used, how much xp increase and in which profession
         // TODO: separate packet for levelup
         WillowNetworking.syncPlayerProfessionState(player, state);
