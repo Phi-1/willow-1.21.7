@@ -11,6 +11,7 @@
     "ItemMixin",
     "PlayerEntityMixin",
     "ServerPlayerInteractionManagerMixin",
+    "ServerWorldMixin",
     "TridentItemMixin"
   ],
   "injectors": {

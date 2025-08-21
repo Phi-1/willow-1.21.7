@@ -3,7 +3,6 @@ package phi.willow.util;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
-import phi.willow.Willow;
 import phi.willow.data.*;
 import phi.willow.registry.WillowNetworking;
 import phi.willow.registry.WillowTags;
@@ -97,7 +96,29 @@ public class ProfessionUtil {
         WillowNetworking.syncPlayerProfessionState(player, state);
     }
 
-    public static void increaseXP(Profession profession, ServerPlayerEntity player, boolean goldBonus)
+    public static void levelTo(ProfessionLevel level, Profession profession, ServerPlayerEntity player)
+    {
+        // TODO: test
+        PlayerProfessionState state = getPlayerState(player);
+        int current = state.getXP(profession);
+        int needed = level.totalXPForNext - level.xpToNext;
+        int diff = needed - current;
+        if (diff <= 0)
+            return;
+        state.setXP(profession, current + diff);
+        setPlayerState(player, state);
+        WillowNetworking.syncPlayerProfessionState(player, state);
+    }
+
+    public static void increaseXP(ServerPlayerEntity player, Profession profession, int amount)
+    {
+        PlayerProfessionState state = getPlayerState(player);
+        state.setXP(profession, state.getXP(profession) + amount);
+        setPlayerState(player, state);
+        WillowNetworking.syncPlayerProfessionState(player, state);
+    }
+
+    public static void gainBaseXP(Profession profession, ServerPlayerEntity player, boolean goldBonus)
     {
         ProfessionLevel levelBefore = getProfessionLevel(player, profession);
         int goldFactor = goldBonus ? 8 : 1;

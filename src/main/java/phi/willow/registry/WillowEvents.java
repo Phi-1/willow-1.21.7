@@ -1,5 +1,6 @@
 package phi.willow.registry;
 
+import io.netty.util.Constant;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -19,6 +20,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FuelRegistry;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
@@ -26,13 +28,15 @@ import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
+import net.minecraft.loot.provider.number.LootNumberProvider;
+import net.minecraft.loot.provider.number.LootNumberProviderTypes;
+import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.village.TradeOffers;
@@ -55,20 +59,11 @@ public class WillowEvents {
         ServerTickEvents.END_WORLD_TICK.register(TickTimers::onServerTick);
         LootTableEvents.MODIFY.register(WillowEvents::addStickDropToLeaves);
         LootTableEvents.MODIFY.register(WillowEvents::addHeraldDrop);
+        LootTableEvents.MODIFY.register(WillowEvents::addManualsToLootTables);
         FuelRegistryEvents.BUILD.register(WillowEvents::registerFuelItems);
         TradeOfferHelper.registerWanderingTraderOffers(WillowEvents::addWanderingTraderTrades);
         PlayerBlockBreakEvents.AFTER.register(WillowEvents::gainBlockBreakXP);
         ServerLivingEntityEvents.AFTER_DAMAGE.register(WillowEvents::gainFightingXP);
-
-        // TODO: manuals
-        LootTableEvents.MODIFY.register(((key, tableBuilder, source, registries) -> {
-            Optional<RegistryKey<LootTable>> zombie = EntityType.ZOMBIE.getLootTableKey();
-            if (zombie.isEmpty())
-                return;
-            if (key == zombie.get() || LootTables.VILLAGE_WEAPONSMITH_CHEST == key) {
-                tableBuilder.pool(LootPool.builder().with(ItemEntry.builder(Items.ANCIENT_DEBRIS)));
-            }
-        }));
 
         ServerPlayerEvents.JOIN.register((player) -> {
             PlayerProfessionState state = WillowPersistentState.getServerState(player.getServer()).getPlayerProfessionState().getPlayerState(player);
@@ -82,14 +77,229 @@ public class WillowEvents {
         ServerTickEvents.START_WORLD_TICK.register(WillowEvents::armorProficiencyTick);
     }
 
+    private static void addManualsToLootTables(RegistryKey<LootTable> key, LootTable.Builder builder, LootTableSource source, RegistryWrapper.WrapperLookup registries)
+    {
+        // TODO: check some chests in a random world to see if theyre not crazy broken somehow
+        LootPool.Builder pool = LootPool.builder();
+        if (key == LootTables.HERO_OF_THE_VILLAGE_LIBRARIAN_GIFT_GAMEPLAY)
+        {
+            addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.3f);
+            addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.05f);
+            addAllManualsOfLevel(pool, ProfessionLevel.MASTER, 0.01f);
+        }
+        else if (key == LootTables.HERO_OF_THE_VILLAGE_FARMER_GIFT_GAMEPLAY)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.3f, Profession.FARMING);
+            addManualsOfProfessions(pool, ProfessionLevel.EXPERT, 0.1f, Profession.FARMING);
+            addManualsOfProfessions(pool, ProfessionLevel.MASTER, 0.05f, Profession.FARMING);
+        }
+        else if (key == LootTables.FISHING_TREASURE_GAMEPLAY)
+        {
+            builder.modifyPools(existingPool -> addAllManualsOfLevel(existingPool, ProfessionLevel.APPRENTICE, 1.0f));
+        }
+        else if (key == LootTables.ABANDONED_MINESHAFT_CHEST)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.1f, Profession.MINING);
+            addManualsOfProfessions(pool, ProfessionLevel.EXPERT, 0.04f, Profession.MINING);
+            pool.rolls(ConstantLootNumberProvider.create(2.0f));
+        }
+        else if (key == LootTables.ANCIENT_CITY_CHEST)
+        {
+            addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.3f);
+            addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.2f);
+            addAllManualsOfLevel(pool, ProfessionLevel.MASTER, 0.05f);
+            pool.rolls(ConstantLootNumberProvider.create(3.0f));
+        }
+        else if (key == LootTables.BASTION_BRIDGE_CHEST)
+        {
+            addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.2f);
+            addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.1f);
+            pool.rolls(ConstantLootNumberProvider.create(2.0f));
+        }
+        else if (key == LootTables.BASTION_HOGLIN_STABLE_CHEST)
+        {
+            addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.2f);
+            addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.1f);
+            pool.rolls(ConstantLootNumberProvider.create(2.0f));
+        }
+        else if (key == LootTables.BASTION_OTHER_CHEST)
+        {
+            addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.2f);
+            addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.1f);
+            pool.rolls(ConstantLootNumberProvider.create(2.0f));
+        }
+        else if (key == LootTables.BASTION_TREASURE_CHEST)
+        {
+            addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.2f);
+            addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.1f);
+            addAllManualsOfLevel(pool, ProfessionLevel.MASTER, 0.01f);
+            pool.rolls(ConstantLootNumberProvider.create(3.0f));
+        }
+        else if (key == LootTables.BURIED_TREASURE_CHEST)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.3f, Profession.FIGHTING);
+            addManualsOfProfessions(pool, ProfessionLevel.EXPERT, 0.05f, Profession.FIGHTING);
+        }
+        else if (key == LootTables.DESERT_PYRAMID_CHEST)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.05f, Profession.FARMING, Profession.FIGHTING);
+            addManualsOfProfessions(pool, ProfessionLevel.EXPERT, 0.01f, Profession.FARMING, Profession.FIGHTING);
+            pool.rolls(ConstantLootNumberProvider.create(2.0f));
+        }
+        else if (key == LootTables.IGLOO_CHEST_CHEST)
+        {
+            addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.15f);
+            pool.rolls(ConstantLootNumberProvider.create(2.0f));
+        }
+        else if (key == LootTables.JUNGLE_TEMPLE_CHEST)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.2f, Profession.WOODCUTTING, Profession.FARMING);
+            addManualsOfProfessions(pool, ProfessionLevel.EXPERT, 0.02f, Profession.WOODCUTTING, Profession.FARMING);
+            pool.rolls(ConstantLootNumberProvider.create(2.0f));
+        }
+        else if (key == LootTables.NETHER_BRIDGE_CHEST)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.1f, Profession.FIGHTING, Profession.FARMING, Profession.MINING);
+            addManualsOfProfessions(pool, ProfessionLevel.EXPERT, 0.05f, Profession.FIGHTING, Profession.FARMING, Profession.MINING);
+            pool.rolls(ConstantLootNumberProvider.create(2.0f));
+        }
+        else if (key == LootTables.PILLAGER_OUTPOST_CHEST)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.2f, Profession.WOODCUTTING, Profession.FIGHTING);
+            addManualsOfProfessions(pool, ProfessionLevel.EXPERT, 0.05f, Profession.WOODCUTTING, Profession.FIGHTING);
+            pool.rolls(ConstantLootNumberProvider.create(2.0f));
+        }
+        else if (key == LootTables.SHIPWRECK_MAP_CHEST)
+        {
+            addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.1f);
+            pool.rolls(ConstantLootNumberProvider.create(3.0f));
+        }
+        else if (key == LootTables.SHIPWRECK_SUPPLY_CHEST)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.3f, Profession.FARMING);
+        }
+        else if (key == LootTables.SIMPLE_DUNGEON_CHEST)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.3f, Profession.FIGHTING, Profession.MINING);
+            addManualsOfProfessions(pool, ProfessionLevel.EXPERT, 0.04f, Profession.FIGHTING, Profession.MINING);
+        }
+        else if (key == LootTables.SPAWN_BONUS_CHEST)
+        {
+            addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.5f);
+            pool.rolls(ConstantLootNumberProvider.create(4.0f));
+        }
+        else if (key == LootTables.STRONGHOLD_CORRIDOR_CHEST)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.3f, Profession.FIGHTING, Profession.MINING);
+            addManualsOfProfessions(pool, ProfessionLevel.EXPERT, 0.1f, Profession.FIGHTING, Profession.MINING);
+            addManualsOfProfessions(pool, ProfessionLevel.MASTER, 0.01f, Profession.FIGHTING, Profession.MINING);
+        }
+        else if (key == LootTables.STRONGHOLD_CROSSING_CHEST)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.3f, Profession.FIGHTING, Profession.MINING);
+            addManualsOfProfessions(pool, ProfessionLevel.EXPERT, 0.1f, Profession.FIGHTING, Profession.MINING);
+        }
+        else if (key == LootTables.STRONGHOLD_LIBRARY_CHEST)
+        {
+            addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.3f);
+            addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.1f);
+            addAllManualsOfLevel(pool, ProfessionLevel.MASTER, 0.01f);
+            pool.rolls(ConstantLootNumberProvider.create(3.0f));
+        }
+        else if (key == LootTables.UNDERWATER_RUIN_SMALL_CHEST)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.3f, Profession.FARMING);
+        }
+        else if (key == LootTables.UNDERWATER_RUIN_BIG_CHEST)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.3f, Profession.FARMING, Profession.FIGHTING);
+        }
+        else if (key == LootTables.WOODLAND_MANSION_CHEST)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.2f, Profession.FARMING, Profession.FIGHTING, Profession.WOODCUTTING);
+            addManualsOfProfessions(pool, ProfessionLevel.EXPERT, 0.1f, Profession.FARMING, Profession.FIGHTING, Profession.WOODCUTTING);
+            addManualsOfProfessions(pool, ProfessionLevel.MASTER, 0.02f, Profession.FARMING, Profession.FIGHTING, Profession.WOODCUTTING);
+            pool.rolls(ConstantLootNumberProvider.create(3.0f));
+        }
+        else if (key == LootTables.VILLAGE_PLAINS_CHEST || key == LootTables.VILLAGE_SAVANNA_HOUSE_CHEST)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.1f);
+        }
+        else if (key == LootTables.VILLAGE_SNOWY_HOUSE_CHEST || key == LootTables.VILLAGE_TAIGA_HOUSE_CHEST)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.1f, Profession.WOODCUTTING);
+        }
+        else if (key == LootTables.VILLAGE_DESERT_HOUSE_CHEST)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.05f, Profession.FARMING);
+            addManualsOfProfessions(pool, ProfessionLevel.EXPERT, 0.02f, Profession.FARMING);
+            pool.rolls(ConstantLootNumberProvider.create(2.0f));
+        }
+        else if (key == LootTables.VILLAGE_WEAPONSMITH_CHEST || key == LootTables.VILLAGE_ARMORER_CHEST)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.3f, Profession.FIGHTING);
+        }
+        else
+            return;
+        builder.pool(pool);
+    }
+
+    private static void addAllManualsOfLevel(LootPool.Builder pool, ProfessionLevel level, float chance)
+    {
+        addManualsOfProfessions(pool, level, chance, Profession.values());
+    }
+
+    private static void addManualsOfProfessions(LootPool.Builder pool, ProfessionLevel level, float chance, Profession ...professions)
+    {
+        for (Profession profession : professions)
+        {
+            pool.with(ItemEntry.builder(getManualFor(profession, level)).conditionally(RandomChanceLootCondition.builder(chance)));
+        }
+    }
+
+    private static Item getManualFor(Profession profession, ProfessionLevel level)
+    {
+        return switch(profession)
+        {
+            case MINING -> switch (level)
+            {
+                case NOVICE -> Items.AIR;
+                case APPRENTICE -> WillowItems.APPRENTICE_MINING_MANUAL;
+                case EXPERT -> WillowItems.EXPERT_MINING_MANUAL;
+                case MASTER -> WillowItems.MASTER_MINING_MANUAL;
+            };
+            case WOODCUTTING -> switch (level)
+            {
+                case NOVICE -> Items.AIR;
+                case APPRENTICE -> WillowItems.APPRENTICE_WOODCUTTING_MANUAL;
+                case EXPERT -> WillowItems.EXPERT_WOODCUTTING_MANUAL;
+                case MASTER -> WillowItems.MASTER_WOODCUTTING_MANUAL;
+            };
+            case FARMING -> switch(level)
+            {
+                case NOVICE -> Items.AIR;
+                case APPRENTICE -> WillowItems.APPRENTICE_FARMING_MANUAL;
+                case EXPERT -> WillowItems.EXPERT_FARMING_MANUAL;
+                case MASTER -> WillowItems.MASTER_FARMING_MANUAL;
+            };
+            case FIGHTING -> switch(level)
+            {
+                case NOVICE -> Items.AIR;
+                case APPRENTICE -> WillowItems.APPRENTICE_FIGHTING_MANUAL;
+                case EXPERT -> WillowItems.EXPERT_FIGHTING_MANUAL;
+                case MASTER -> WillowItems.MASTER_FIGHTING_MANUAL;
+            };
+        };
+    }
+
     private static void gainFightingXP(LivingEntity living, DamageSource source, float baseDamageTaken, float damageTaken, boolean blocked)
     {
         // Increase xp on block
         if (living instanceof ServerPlayerEntity player && blocked)
-            ProfessionUtil.increaseXP(Profession.FIGHTING, player, false);
+            ProfessionUtil.gainBaseXP(Profession.FIGHTING, player, false);
         // And on damaging another entity
         else if (source.getAttacker() instanceof ServerPlayerEntity player)
-            ProfessionUtil.increaseXP(Profession.FIGHTING, player, false);
+            ProfessionUtil.gainBaseXP(Profession.FIGHTING, player, false);
     }
 
     private static void gainBlockBreakXP(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity)
@@ -99,23 +309,30 @@ public class WillowEvents {
         ItemStack stack = player.getMainHandStack();
         if (!stack.getItem().isCorrectForDrops(stack, state))
             return;
-        if (stack.isIn(ItemTags.PICKAXES) || stack.isIn(ItemTags.SHOVELS))
+        if (stack.isIn(ItemTags.PICKAXES))
         {
             if (!ProfessionUtil.canUseToolAtLevel(ProfessionUtil.getProfessionLevel(player, Profession.MINING), stack))
                 return;
-            ProfessionUtil.increaseXP(Profession.MINING, serverPlayer, false);
+            ProfessionUtil.gainBaseXP(Profession.MINING, serverPlayer, false);
+        }
+        else if (stack.isIn(ItemTags.SHOVELS))
+        {
+            if (!ProfessionUtil.canUseToolAtLevel(ProfessionUtil.getProfessionLevel(player, Profession.MINING), stack))
+                return;
+            if (world.random.nextInt(4) == 0)
+                ProfessionUtil.gainBaseXP(Profession.MINING, serverPlayer, false);
         }
         else if (stack.isIn(ItemTags.AXES))
         {
             if (!ProfessionUtil.canUseToolAtLevel(ProfessionUtil.getProfessionLevel(player, Profession.WOODCUTTING), stack))
                 return;
-            ProfessionUtil.increaseXP(Profession.WOODCUTTING, serverPlayer, false);
+            ProfessionUtil.gainBaseXP(Profession.WOODCUTTING, serverPlayer, false);
         }
     }
 
     private static void addWanderingTraderTrades(TradeOfferHelper.WanderingTraderOffersBuilder builder)
     {
-        // NOTE: you can add a custom pool as well for custom traders with the builder.pool function
+        // NOTE: you can add a custom pool as well for custom traders with the pool.pool function
         // The special pool is 7 items big by default, and every trader picks 2 items from it at random. So the excavator has a 2 in 8 chance to show up currently
         builder.addOffersToPool(TradeOfferHelper.WanderingTraderOffersBuilder.SELL_SPECIAL_ITEMS_POOL, new TradeOffers.SellItemFactory(WillowItems.EXCAVATOR, 12, 1, 80));
     }

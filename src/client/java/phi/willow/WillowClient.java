@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -39,8 +40,6 @@ public class WillowClient implements ClientModInitializer {
 		});
 
 		ItemTooltipCallback.EVENT.register((stack, context, type, lines) -> {
-            PlayerEntity player = MinecraftClient.getInstance().player;
-            // TODO: color text red if level is too high
 			if (stack.isIn(WillowTags.Items.NOVICE_USABLE_EQUIPMENT))
 				lines.add(Text.translatable("willow.profession_tooltip_novice").withColor(0x93e2b4));
 			else if (stack.isIn(WillowTags.Items.APPRENTICE_USABLE_EQUIPMENT))

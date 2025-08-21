@@ -18,7 +18,7 @@ import java.util.List;
 
 public class XPPopupRenderer {
 
-    private static final int POPUP_LIFETIME = 50;
+    private static final int POPUP_LIFETIME = 60;
 
     private static final List<XPPopup> activePopups = new ArrayList<>();
     private static final Identifier PLUS = Identifier.of(Willow.MOD_ID, "textures/gui/plus.png");
@@ -49,7 +49,7 @@ public class XPPopupRenderer {
 
     public static void createPopup(Profession profession, ProfessionLevel level)
     {
-        activePopups.add(new XPPopup(profession, level, POPUP_LIFETIME, 0.0f, 0.0f, (float) (Math.random() * 2 - 1), (float) (Math.random() * 2 - 1)));
+        activePopups.add(new XPPopup(profession, level, POPUP_LIFETIME, 0.0f, 0.0f, (float) (Math.random() * 2 - 1) * 0.8f, (float) (Math.random() * 2 - 1) * 0.8f));
     }
 
     public static void render(DrawContext context, RenderTickCounter tickCounter)

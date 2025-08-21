@@ -7,7 +7,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.state.property.IntProperty;
@@ -75,7 +74,7 @@ public class HoeItemMixin {
             final int damagePerCrop = 6;
             // NOTE: item#damage already takes into account unbreaking
             stack.damage(damagePerCrop, player);
-            ProfessionUtil.increaseXP(Profession.FARMING, serverPlayer,false);
+            ProfessionUtil.gainBaseXP(Profession.FARMING, serverPlayer,false);
         }
         cir.setReturnValue(ActionResult.SUCCESS);
     }
