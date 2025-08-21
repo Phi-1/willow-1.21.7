@@ -17,6 +17,7 @@ import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -41,68 +42,32 @@ public class TheHeraldItem extends AxeItem {
         super(WillowToolMaterials.THE_HERALD, 7.0f, -3.0f, settings
                 .fireproof()
                 .rarity(Rarity.EPIC));
-        // TODO: just use postmine
-        PlayerBlockBreakEvents.AFTER.register((world, player, pos, state, blockEntity) -> {
-            ItemStack stack = player.getMainHandStack();
-            if (stack.isOf(WillowItems.THE_HERALD))
-                this.afterBreakBlock(world, player, pos, state, blockEntity, stack);
-        });
     }
 
-    public static void tryCreateHerald(ItemEntity destroyed)
-    {
-        // FIXME: only works 10% of the time
-        World world = destroyed.getWorld();
-        if (world.isClient)
-            return;
-        if (destroyed.getStack().isOf(Items.GOLDEN_AXE)
-                && !world.getEntitiesByType(EntityType.LIGHTNING_BOLT, Box.of(destroyed.getPos(), 1, 1, 1), (lightningEntity) -> true).isEmpty())
-        {
-            final int requiredShards = 3;
-            List<ItemEntity> echoShards = world.getEntitiesByClass(ItemEntity.class, Box.of(destroyed.getPos(), 1, 1, 1), itemEntity -> itemEntity.getStack().isOf(Items.ECHO_SHARD));
-            for (ItemEntity shard : echoShards)
-            {
-                if (shard.getStack().getCount() >= requiredShards)
-                {
-                    TickTimers.schedule(() -> {
-                        ItemEntity herald = new ItemEntity(world, destroyed.getBlockX(), destroyed.getBlockY(), destroyed.getBlockZ(), new ItemStack(WillowItems.THE_HERALD));
-                        world.spawnEntity(herald);
-                        world.playSound(herald, herald.getBlockPos(), SoundEvents.ENTITY_WITHER_SPAWN, SoundCategory.PLAYERS);
-                    }, 10);
-                }
-            }
-        }
-    }
-
-    private void afterBreakBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity, ItemStack stack)
-    {
-        if (world.isClient)
-            return;
-        if (!state.isIn(BlockTags.LOGS))
-            return;
+    @Override
+    public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
+        if (!state.isIn(BlockTags.LOGS) || !(miner instanceof ServerPlayerEntity player))
+            return super.postMine(stack, world, state, pos, miner);
         ProfessionLevel level = ProfessionUtil.getProfessionLevel(player, Profession.WOODCUTTING);
         if (ProfessionUtil.canUseToolAtLevel(level, stack))
-            chopLogsAround(pos, world, stack, player);
+            chopLogsAround(pos, world, player);
+        return super.postMine(stack, world, state, pos, miner);
     }
 
-    private void chopLogsAround(BlockPos pos, World world, ItemStack axe, PlayerEntity player)
+    private void chopLogsAround(BlockPos pos, World world, ServerPlayerEntity player)
     {
-        ToolComponent toolComponent = axe.get(DataComponentTypes.TOOL);
-        if (toolComponent == null)
-        {
-            Willow.LOGGER.error("Herald has no tool component");
-            return;
-        }
+        int i = 0;
         for (BlockPos checkPos : BlockPos.iterateOutwards(pos, 1, 1, 1))
         {
             BlockState state = world.getBlockState(checkPos);
+            BlockPos copy = new BlockPos(checkPos.getX(), checkPos.getY(), checkPos.getZ());
             if (state.isIn(BlockTags.LOGS))
             {
-                // TODO: replace with playermanager#trybreakblock, and remove event invocation
-                world.breakBlock(checkPos, true, player);
-                axe.damage(toolComponent.damagePerBlock(), player);
-                PlayerBlockBreakEvents.AFTER.invoker().afterBlockBreak(world, player, checkPos, state, null);
+                TickTimers.schedule(() -> {
+                    player.interactionManager.tryBreakBlock(copy);
+                }, 1 + i);
             }
+            i++;
         }
     }
 

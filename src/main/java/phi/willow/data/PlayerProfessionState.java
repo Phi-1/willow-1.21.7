@@ -28,7 +28,6 @@ public class PlayerProfessionState {
         }
     }
     public void setXP(Profession profession, int amount) {
-        // TODO: sync
         xpPerProfession.set(profession.ordinal(), amount);
     }
 

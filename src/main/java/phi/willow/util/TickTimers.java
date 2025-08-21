@@ -11,9 +11,10 @@ import java.util.List;
 public class TickTimers {
 
     private static final List<TickTimer> TIMERS = new ArrayList<>();
+    private static final List<TickTimer> TO_ADD = new ArrayList<>();
 
     public static void schedule(Runnable task, int tickDelay) {
-        TIMERS.add(new TickTimer(task, tickDelay));
+        TO_ADD.add(new TickTimer(task, tickDelay));
     }
 
     public static void tickAll() {
@@ -29,6 +30,8 @@ public class TickTimers {
     }
 
     public static void onServerTick(ServerWorld world) {
+        TIMERS.addAll(TO_ADD);
+        TO_ADD.clear();
         tickAll();
     }
 

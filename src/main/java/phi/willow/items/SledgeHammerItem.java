@@ -25,10 +25,13 @@ public class SledgeHammerItem extends Item {
         HAMMER_OF_THE_DEEP
     }
 
+    public final Type type;
+
     public static final List<UUID> preventAOEMineTriggersOn = new ArrayList<>();
 
     public SledgeHammerItem(Settings settings, Type type) {
         super(createSettings(settings, type));
+        this.type = type;
     }
 
     private static Settings createSettings(Settings settings, Type type)
@@ -89,6 +92,5 @@ public class SledgeHammerItem extends Item {
         };
         return new Direction[] {rotation, expansion};
     }
-
     // TODO: knockback in an aoe on attack?
 }

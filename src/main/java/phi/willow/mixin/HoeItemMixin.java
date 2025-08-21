@@ -71,7 +71,7 @@ public class HoeItemMixin {
             player.getWorld().breakBlock(harvestPos, true);
             player.getWorld().setBlockState(harvestPos, state.with(age, 0));
             // TODO: find good damage value
-            final int damagePerCrop = 6;
+            final int damagePerCrop = 5;
             // NOTE: item#damage already takes into account unbreaking
             stack.damage(damagePerCrop, player);
             ProfessionUtil.gainBaseXP(Profession.FARMING, serverPlayer,false);

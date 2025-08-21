@@ -22,30 +22,29 @@ public class WillowEffectsAndPotions {
 
     public static final Potion BUILDERS_POTION = Registry.register(Registries.POTION,
             Identifier.of(Willow.MOD_ID, "builders_potion"),
-            new Potion("builders_potion", new StatusEffectInstance(REACH, 6000, 0)));
+            new Potion("builders_potion", new StatusEffectInstance(REACH, 6000, 0, true, true)));
     public static final Potion BUILDERS_POTION_LONG = Registry.register(Registries.POTION,
             Identifier.of(Willow.MOD_ID, "builders_potion_long"),
-            new Potion("builders_potion_long", new StatusEffectInstance(REACH, 14400, 0)));
+            new Potion("builders_potion_long", new StatusEffectInstance(REACH, 14400, 0, true, true)));
     public static final Potion BUILDERS_POTION_STRONG = Registry.register(Registries.POTION,
             Identifier.of(Willow.MOD_ID, "builders_potion_strong"),
-            new Potion("builders_potion_strong", new StatusEffectInstance(REACH, 6000, 1)));
+            new Potion("builders_potion_strong", new StatusEffectInstance(REACH, 6000, 1, true, true)));
 
     public static final Potion MINERS_POTION = Registry.register(Registries.POTION,
             Identifier.of(Willow.MOD_ID, "miners_potion"),
-            new Potion("miners_potion", new StatusEffectInstance(StatusEffects.HASTE, 6000, 0)));
+            new Potion("miners_potion", new StatusEffectInstance(StatusEffects.HASTE, 6000, 0, true, true)));
     public static final Potion MINERS_POTION_LONG = Registry.register(Registries.POTION,
             Identifier.of(Willow.MOD_ID, "miners_potion_long"),
-            new Potion("miners_potion_long", new StatusEffectInstance(StatusEffects.HASTE, 14400, 0)));
+            new Potion("miners_potion_long", new StatusEffectInstance(StatusEffects.HASTE, 14400, 0, true, true)));
     public static final Potion MINERS_POTION_STRONG = Registry.register(Registries.POTION,
             Identifier.of(Willow.MOD_ID, "miners_potion_strong"),
-            new Potion("builders_potion_strong", new StatusEffectInstance(StatusEffects.HASTE, 6000, 1)));
+            new Potion("builders_potion_strong", new StatusEffectInstance(StatusEffects.HASTE, 6000, 1, true, true)));
 
     public static void registerPotionRecipes() {
         FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
             builder.registerPotionRecipe(Potions.AWKWARD, WillowItems.GOLDEN_BEETROOT, Registries.POTION.getEntry(BUILDERS_POTION));
             builder.registerPotionRecipe(Registries.POTION.getEntry(BUILDERS_POTION), Items.REDSTONE, Registries.POTION.getEntry(BUILDERS_POTION_LONG));
             builder.registerPotionRecipe(Registries.POTION.getEntry(BUILDERS_POTION), Items.GLOWSTONE_DUST, Registries.POTION.getEntry(BUILDERS_POTION_STRONG));
-            // TODO: miner's potion with amethyst shard
             builder.registerPotionRecipe(Potions.AWKWARD, Items.AMETHYST_SHARD, Registries.POTION.getEntry(MINERS_POTION));
             builder.registerPotionRecipe(Registries.POTION.getEntry(MINERS_POTION), Items.REDSTONE, Registries.POTION.getEntry(MINERS_POTION_LONG));
             builder.registerPotionRecipe(Registries.POTION.getEntry(MINERS_POTION), Items.GLOWSTONE_DUST, Registries.POTION.getEntry(MINERS_POTION_STRONG));

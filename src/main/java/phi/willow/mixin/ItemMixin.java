@@ -25,7 +25,6 @@ public abstract class ItemMixin {
         BlocksAttacksComponent blocksAttacksComponent = stack.get(DataComponentTypes.BLOCKS_ATTACKS);
         if (blocksAttacksComponent == null)
             return;
-        // TODO: test once xp is implemented, fail might need to be pass?
         if (!ProfessionUtil.canUseToolAtLevel(ProfessionUtil.getProfessionLevel(user, Profession.FIGHTING), stack))
             cir.setReturnValue(ActionResult.FAIL);
     }

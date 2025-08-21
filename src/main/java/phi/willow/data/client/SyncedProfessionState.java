@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class SyncedProfessionState {
 
-    // TODO: test sync
     /**
      * ONLY ACCESS ON LOGICAL CLIENT
      */

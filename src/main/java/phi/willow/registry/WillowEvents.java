@@ -1,6 +1,5 @@
 package phi.willow.registry;
 
-import io.netty.util.Constant;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -12,12 +11,12 @@ import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FuelRegistry;
 import net.minecraft.item.Item;
@@ -29,16 +28,16 @@ import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
-import net.minecraft.loot.provider.number.LootNumberProvider;
-import net.minecraft.loot.provider.number.LootNumberProviderTypes;
-import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.village.TradeOffers;
 import net.minecraft.world.World;
 import phi.willow.Willow;
@@ -46,11 +45,11 @@ import phi.willow.data.PlayerProfessionState;
 import phi.willow.data.Profession;
 import phi.willow.data.ProfessionLevel;
 import phi.willow.data.WillowPersistentState;
+import phi.willow.items.SledgeHammerItem;
 import phi.willow.util.ProfessionUtil;
 import phi.willow.util.TickTimers;
 
 import java.util.List;
-import java.util.Optional;
 
 public class WillowEvents {
 
@@ -64,10 +63,12 @@ public class WillowEvents {
         TradeOfferHelper.registerWanderingTraderOffers(WillowEvents::addWanderingTraderTrades);
         PlayerBlockBreakEvents.AFTER.register(WillowEvents::gainBlockBreakXP);
         ServerLivingEntityEvents.AFTER_DAMAGE.register(WillowEvents::gainFightingXP);
+        // TODO: reenable once fixed
+//        ServerLivingEntityEvents.AFTER_DAMAGE.register(WillowEvents::doSledgehammerKnockback);
 
         ServerPlayerEvents.JOIN.register((player) -> {
             PlayerProfessionState state = WillowPersistentState.getServerState(player.getServer()).getPlayerProfessionState().getPlayerState(player);
-            // TODO: test with higher levels
+            // FIXME: this plays the levelup sound if player is higher than novice in anything -> would be fixed by adding a separate levelup packet sent from server, instead of client calculating it
             WillowNetworking.syncPlayerProfessionState(player, state);
         });
 
@@ -77,9 +78,26 @@ public class WillowEvents {
         ServerTickEvents.START_WORLD_TICK.register(WillowEvents::armorProficiencyTick);
     }
 
+    // TODO: move to sledgehammer class, into postDamageEntity
+    private static void doSledgehammerKnockback(LivingEntity living, DamageSource source, float baseDamage, float damage, boolean blocked) {
+        // TODO: prevent if not fully charged, and if not high enough level
+        if (!(source.getAttacker() instanceof PlayerEntity player))
+            return;
+        ItemStack stack = source.getWeaponStack();
+        if (stack == null || !(stack.getItem() instanceof SledgeHammerItem sledgeHammerItem))
+            return;
+        final int range = sledgeHammerItem.type == SledgeHammerItem.Type.HAMMER_OF_THE_DEEP ? 8 : 6;
+        final float strength = sledgeHammerItem.type == SledgeHammerItem.Type.HAMMER_OF_THE_DEEP ? 1.2f : 0.8f;
+        List<HostileEntity> mobs = living.getWorld().getEntitiesByClass(HostileEntity.class, Box.of(living.getPos(), range, range, range), LivingEntity::isAlive);
+        for (HostileEntity mob : mobs)
+        {
+            mob.takeKnockback(strength, player.getX() - mob.getX(), player.getZ() - mob.getZ());
+        }
+        player.getWorld().playSound(null, player.getBlockPos(), SoundEvents.ENTITY_DRAGON_FIREBALL_EXPLODE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+    }
+
     private static void addManualsToLootTables(RegistryKey<LootTable> key, LootTable.Builder builder, LootTableSource source, RegistryWrapper.WrapperLookup registries)
     {
-        // TODO: check some chests in a random world to see if theyre not crazy broken somehow
         LootPool.Builder pool = LootPool.builder();
         if (key == LootTables.HERO_OF_THE_VILLAGE_LIBRARIAN_GIFT_GAMEPLAY)
         {

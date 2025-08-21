@@ -98,7 +98,6 @@ public class ProfessionUtil {
 
     public static void levelTo(ProfessionLevel level, Profession profession, ServerPlayerEntity player)
     {
-        // TODO: test
         PlayerProfessionState state = getPlayerState(player);
         int current = state.getXP(profession);
         int needed = level.totalXPForNext - level.xpToNext;
@@ -128,7 +127,7 @@ public class ProfessionUtil {
         PlayerProfessionState state = getPlayerState(player);
         state.setXP(profession, state.getXP(profession) + xpGain);
         setPlayerState(player, state);
-        // TODO: replace with more specific packet, like was a golden tool used, how much xp increase and in which profession
+        // TODO: replace with more specific packet, like was a golden tool used, how much xp increase and in which profession. Would also fix the login levelup sound bug
         // TODO: separate packet for levelup
         WillowNetworking.syncPlayerProfessionState(player, state);
 //        if (levelBefore != getProfessionLevel(player, profession))

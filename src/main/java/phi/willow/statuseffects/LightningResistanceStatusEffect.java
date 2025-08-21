@@ -13,6 +13,4 @@ public class LightningResistanceStatusEffect extends StatusEffect {
     {
         return baseDamage * (amplifier > 0 ? 0.2f : 0.4f);
     }
-
-    // TODO: effect, lang, icon
 }
