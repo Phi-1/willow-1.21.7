@@ -9,7 +9,6 @@ import phi.willow.registry.*;
 public class Willow implements ModInitializer {
 
     // TODO: add manuals to librarian trades
-    // TODO: needs_diamond_tool blocks, iron is done for now
 	// TODO: Item#onItemEntityDestroyed is a really cool event for custom crafting shenanigans
 	// TODO: HUD indicators when holding/wearing stuff you dont have proficiency for?
 	// TODO: don't forget to add new tools to base minecraft tags, sledgehammer to pickaxes.json and such

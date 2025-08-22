@@ -21,6 +21,7 @@ public class WillowLanguageProvider extends FabricLanguageProvider {
     public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add(WillowEffectsAndPotions.LIGHTNING_RESISTANCE.value(), "Lightning Resistance");
         translationBuilder.add(WillowEffectsAndPotions.REACH.value(), "Reach");
+        translationBuilder.add(WillowEffectsAndPotions.RECALL.value(), "Recall");
 
         translationBuilder.add(Identifier.of("item.minecraft", "potion.effect.builders_potion"), "Builder's Potion");
         translationBuilder.add(Identifier.of("item.minecraft", "potion.effect.builders_potion_long"), "Builder's Potion");
@@ -29,6 +30,8 @@ public class WillowLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(Identifier.of("item.minecraft", "potion.effect.miners_potion"), "Miner's Potion");
         translationBuilder.add(Identifier.of("item.minecraft", "potion.effect.miners_potion_long"), "Miner's Potion");
         translationBuilder.add(Identifier.of("item.minecraft", "potion.effect.miners_potion_strong"), "Miner's Potion");
+
+        translationBuilder.add(Identifier.of("item.minecraft", "potion.effect.recall_potion"), "Recall Potion");
 
         translationBuilder.add(WillowItems.THE_HERALD, "The Herald");
         translationBuilder.add(WillowItems.SLEDGEHAMMER, "Sledgehammer");

@@ -14,11 +14,13 @@ import net.minecraft.util.Identifier;
 import phi.willow.Willow;
 import phi.willow.statuseffects.LightningResistanceStatusEffect;
 import phi.willow.statuseffects.ReachStatusEffect;
+import phi.willow.statuseffects.RecallStatusEffect;
 
 public class WillowEffectsAndPotions {
 
     public static final RegistryEntry<StatusEffect> LIGHTNING_RESISTANCE = Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of(Willow.MOD_ID, "lightning_resistance"), new LightningResistanceStatusEffect());
     public static final RegistryEntry<StatusEffect> REACH = Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of(Willow.MOD_ID, "reach"), new ReachStatusEffect());
+    public static final RegistryEntry<StatusEffect> RECALL = Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of(Willow.MOD_ID, "recall"), new RecallStatusEffect());
 
     public static final Potion BUILDERS_POTION = Registry.register(Registries.POTION,
             Identifier.of(Willow.MOD_ID, "builders_potion"),
@@ -40,14 +42,21 @@ public class WillowEffectsAndPotions {
             Identifier.of(Willow.MOD_ID, "miners_potion_strong"),
             new Potion("builders_potion_strong", new StatusEffectInstance(StatusEffects.HASTE, 6000, 1, true, true)));
 
+    public static final Potion RECALL_POTION = Registry.register(Registries.POTION,
+            Identifier.of(Willow.MOD_ID, "recall_potion"),
+            new Potion("recall_potion", new StatusEffectInstance(RECALL, 1, 0)));
+
     public static void registerPotionRecipes() {
         FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
             builder.registerPotionRecipe(Potions.AWKWARD, WillowItems.GOLDEN_BEETROOT, Registries.POTION.getEntry(BUILDERS_POTION));
             builder.registerPotionRecipe(Registries.POTION.getEntry(BUILDERS_POTION), Items.REDSTONE, Registries.POTION.getEntry(BUILDERS_POTION_LONG));
             builder.registerPotionRecipe(Registries.POTION.getEntry(BUILDERS_POTION), Items.GLOWSTONE_DUST, Registries.POTION.getEntry(BUILDERS_POTION_STRONG));
+
             builder.registerPotionRecipe(Potions.AWKWARD, Items.AMETHYST_SHARD, Registries.POTION.getEntry(MINERS_POTION));
             builder.registerPotionRecipe(Registries.POTION.getEntry(MINERS_POTION), Items.REDSTONE, Registries.POTION.getEntry(MINERS_POTION_LONG));
             builder.registerPotionRecipe(Registries.POTION.getEntry(MINERS_POTION), Items.GLOWSTONE_DUST, Registries.POTION.getEntry(MINERS_POTION_STRONG));
+
+            builder.registerPotionRecipe(Potions.AWKWARD, Items.TROPICAL_FISH, Registries.POTION.getEntry(RECALL_POTION));
         });
     }
 
