@@ -1,11 +1,14 @@
 package phi.willow.rendering;
 
 import com.google.common.collect.ImmutableMap;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.RenderTickCounter;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
@@ -19,8 +22,12 @@ import java.util.List;
 public class XPPopupRenderer {
 
     private static final int POPUP_LIFETIME = 60;
+    private static final int OVERLAY_LIFETIME = 240;
 
     private static final List<XPPopup> activePopups = new ArrayList<>();
+    // Only render the first one, remove when faded out, then render the next
+    private static final List<LevelupOverlay> activeLevelupOverlays = new ArrayList<>();
+
     private static final Identifier PLUS = Identifier.of(Willow.MOD_ID, "textures/gui/plus.png");
     private static final ImmutableMap<ProfessionLevel, Identifier> MINING_ICONS = new ImmutableMap.Builder<ProfessionLevel, Identifier>()
             .put(ProfessionLevel.NOVICE, Identifier.ofVanilla("textures/item/wooden_pickaxe.png"))
@@ -52,7 +59,35 @@ public class XPPopupRenderer {
         activePopups.add(new XPPopup(profession, level, POPUP_LIFETIME, 0.0f, 0.0f, (float) (Math.random() * 2 - 1) * 0.8f, (float) (Math.random() * 2 - 1) * 0.8f));
     }
 
+    public static void createLevelupNotification(Profession profession, ProfessionLevel level)
+    {
+        activeLevelupOverlays.add(new LevelupOverlay(profession, level, OVERLAY_LIFETIME));
+    }
+
     public static void render(DrawContext context, RenderTickCounter tickCounter)
+    {
+        renderPopups(context, tickCounter);
+        renderOverlay(context, tickCounter);
+    }
+
+    private static void renderOverlay(DrawContext context, RenderTickCounter tickCounter)
+    {
+        if (activeLevelupOverlays.isEmpty())
+            return;
+        LevelupOverlay overlay = activeLevelupOverlays.getFirst();
+        int width = context.getScaledWindowWidth();
+        int height = context.getScaledWindowHeight();
+        TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
+        int x = width / 2 - textRenderer.getWidth(overlay.text) / 2;
+        int y = height / 2 - textRenderer.fontHeight / 2;
+        float opacity = overlay.lifeTime > OVERLAY_LIFETIME / 2.0f ? 1.0f : overlay.lifeTime / (OVERLAY_LIFETIME / 2.0f);
+        context.drawText(textRenderer, overlay.text, x, y, ColorHelper.fromFloats(opacity, 1.0f, 1.0f, 1.0f), true);
+        overlay.lifeTime -= tickCounter.getTickProgress(false);
+        if (overlay.lifeTime <= 0)
+            activeLevelupOverlays.removeFirst();
+    }
+
+    private static void renderPopups(DrawContext context, RenderTickCounter tickCounter)
     {
         int width = context.getScaledWindowWidth();
         int height = context.getScaledWindowHeight();
@@ -101,6 +136,23 @@ public class XPPopupRenderer {
             this.y = y;
             this.xSpeed = xSpeed;
             this.ySpeed = ySpeed;
+        }
+    }
+
+    // TODO: translatable text
+    private static class LevelupOverlay
+    {
+        public Profession profession;
+        public ProfessionLevel level;
+        public float lifeTime;
+        public Text text;
+
+        public LevelupOverlay(Profession profession, ProfessionLevel level, float lifeTime)
+        {
+            this.profession = profession;
+            this.level = level;
+            this.lifeTime = lifeTime;
+            this.text = Text.literal("You have reached " + this.level.label + " in " + this.profession.label);
         }
     }
 }

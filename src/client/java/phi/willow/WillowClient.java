@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -77,18 +76,24 @@ public class WillowClient implements ClientModInitializer {
 
     private void handleXPGain(List<XPDiff> differences)
     {
-        boolean handleLevelup = false;
         for (XPDiff diff : differences)
         {
             // Stop showing popups at max level
             if (diff.level != ProfessionLevel.MASTER)
                 XPPopupRenderer.createPopup(diff.profession, diff.level);
             if (diff.isLevelup)
-                handleLevelup = true;
+                handleLevelup(diff.profession, diff.level);
         }
+    }
+
+    private void handleLevelup(Profession profession, ProfessionLevel level)
+    {
         World world = MinecraftClient.getInstance().world;
-        if (world != null && handleLevelup)
-            world.playSoundClient(SoundEvents.GOAT_HORN_SOUNDS.get(2).value(), SoundCategory.UI, 1.0f, 1.0f);
+        if (world == null)
+            return;
+        // TODO: Send chat message to everyone
+        XPPopupRenderer.createLevelupNotification(profession, level);
+        world.playSoundClient(SoundEvents.GOAT_HORN_SOUNDS.get(2).value(), SoundCategory.UI, 1.0f, 1.0f);
     }
 
 	private void initializeClientHooks()

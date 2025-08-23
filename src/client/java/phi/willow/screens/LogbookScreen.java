@@ -55,6 +55,7 @@ public class LogbookScreen extends Screen {
             Text buttonText = getLevelButtonText(level);
             ButtonWidget button = ButtonWidget.builder(buttonText, (btn -> {
                 ClientPlayNetworking.send(new WillowNetworking.TryLevelProfessionC2SPacket(profession));
+                this.close();
             })).dimensions(marginLeft, rowStarts.get(i) + rowContentVerticalOffset + marginTop, this.textRenderer.getWidth(buttonText) + buttonPadding, this.textRenderer.fontHeight * 2).build();
             this.addDrawableChild(button);
             this.levelButtons.add(button);
