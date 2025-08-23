@@ -6,9 +6,6 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Server-only for now
- */
 public class TickTimers {
 
     private static final List<TickTimer> TIMERS = new ArrayList<>();

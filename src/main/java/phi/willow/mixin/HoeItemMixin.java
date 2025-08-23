@@ -3,6 +3,7 @@ package phi.willow.mixin;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.ItemStack;
@@ -74,7 +75,7 @@ public class HoeItemMixin {
             // TODO: find good damage value
             final int damagePerCrop = 5;
             // NOTE: item#damage already takes into account unbreaking
-            stack.damage(damagePerCrop, player);
+            stack.damage(damagePerCrop, player, LivingEntity.getSlotForHand(context.getHand()));
             ProfessionUtil.gainBaseXP(Profession.FARMING, serverPlayer, 1, false);
         }
         if (clickedCrop)
