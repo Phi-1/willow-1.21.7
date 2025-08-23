@@ -5,6 +5,7 @@
   "mixins": [
     "AbstractBlockStateAccessor",
     "AbstractBlockStateMixin",
+    "BiomeMixin",
     "BlocksMixin",
     "CropBlockInvoker",
     "FireworkRocketEntityMixin",
