@@ -42,7 +42,6 @@ public class HoeItemMixin {
         // TODO: check if clicked block is a crop, else till soil in aoe -> only till one if shift clicking?
         if (!(player instanceof ServerPlayerEntity serverPlayer))
         {
-            cir.setReturnValue(ActionResult.SUCCESS);
             return;
         }
         Iterable<? extends BlockPos> harvestPositions = switch (toolLevel)
@@ -52,6 +51,7 @@ public class HoeItemMixin {
             case APPRENTICE -> List.of(pos, pos.north(), pos.east(), pos.south(), pos.west());
             case NOVICE -> List.of(pos);
         };
+        boolean clickedCrop = false;
         for (BlockPos harvestPos : harvestPositions)
         {
             BlockState state = player.getWorld().getBlockState(harvestPos);
@@ -64,6 +64,7 @@ public class HoeItemMixin {
                     break;
                 continue;
             }
+            clickedCrop = true;
             IntProperty age = ((CropBlockInvoker) crop).invokeGetAgeProperty();
             int maxAge = crop.getMaxAge();
             if (state.get(age) != maxAge)
@@ -76,6 +77,7 @@ public class HoeItemMixin {
             stack.damage(damagePerCrop, player);
             ProfessionUtil.gainBaseXP(Profession.FARMING, serverPlayer,false);
         }
-        cir.setReturnValue(ActionResult.SUCCESS);
+        if (clickedCrop)
+            cir.setReturnValue(ActionResult.SUCCESS);
     }
 }
