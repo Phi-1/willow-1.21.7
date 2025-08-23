@@ -74,6 +74,7 @@ public class WillowItems {
     public static final Item GOLDEN_BEETROOT = register("golden_beetroot", Item::new, new Item.Settings());
 
     // Food
+    public static final Item BAKED_EGG = register("baked_egg", Item::new, new Item.Settings().food(WillowFoodComponents.BAKED_EGG));
     // Manuals
     public static final Item APPRENTICE_MINING_MANUAL = register("apprentice_mining_manual", settings -> new BaseManualItem(settings, Profession.MINING, ProfessionLevel.APPRENTICE), new Item.Settings());
     public static final Item APPRENTICE_WOODCUTTING_MANUAL = register("apprentice_woodcutting_manual", settings -> new BaseManualItem(settings, Profession.WOODCUTTING, ProfessionLevel.APPRENTICE), new Item.Settings());

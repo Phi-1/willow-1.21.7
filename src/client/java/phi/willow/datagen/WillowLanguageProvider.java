@@ -62,6 +62,8 @@ public class WillowLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(WillowItems.MASTER_FARMING_MANUAL, "Master Farming Manual");
         translationBuilder.add(WillowItems.MASTER_FIGHTING_MANUAL, "Master Fighting Manual");
 
+        translationBuilder.add(WillowItems.BAKED_EGG, "Baked Egg");
+
         translationBuilder.add(Identifier.of(Willow.MOD_ID, "profession_tooltip_novice"), "Novice");
         translationBuilder.add(Identifier.of(Willow.MOD_ID, "profession_tooltip_apprentice"), "Apprentice");
         translationBuilder.add(Identifier.of(Willow.MOD_ID, "profession_tooltip_expert"), "Expert");

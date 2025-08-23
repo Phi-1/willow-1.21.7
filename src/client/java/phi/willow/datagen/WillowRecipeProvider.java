@@ -11,6 +11,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import phi.willow.registry.WillowItems;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class WillowRecipeProvider extends FabricRecipeProvider {
@@ -117,6 +118,8 @@ public class WillowRecipeProvider extends FabricRecipeProvider {
                         .group("flint_shovel_head")
                         .criterion(hasItem(Items.FLINT), conditionsFromItem(Items.FLINT))
                         .offerTo(exporter);
+
+                offerSmelting(List.of(Items.EGG), RecipeCategory.FOOD, WillowItems.BAKED_EGG, 0.1f, 200, "baked_egg");
                 // NOTE: Only generate these once and then move them to minecraft namespace to replace vanilla recipes
 //                // Wooden Sword
 //                createShapeless(RecipeCategory.COMBAT, Items.WOODEN_SWORD, 1)

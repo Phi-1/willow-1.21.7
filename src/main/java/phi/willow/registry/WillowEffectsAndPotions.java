@@ -48,6 +48,7 @@ public class WillowEffectsAndPotions {
 
     public static void registerPotionRecipes() {
         FabricBrewingRecipeRegistryBuilder.BUILD.register(builder -> {
+            // TODO: throwing and lingering pots?
             builder.registerPotionRecipe(Potions.AWKWARD, WillowItems.GOLDEN_BEETROOT, Registries.POTION.getEntry(BUILDERS_POTION));
             builder.registerPotionRecipe(Registries.POTION.getEntry(BUILDERS_POTION), Items.REDSTONE, Registries.POTION.getEntry(BUILDERS_POTION_LONG));
             builder.registerPotionRecipe(Registries.POTION.getEntry(BUILDERS_POTION), Items.GLOWSTONE_DUST, Registries.POTION.getEntry(BUILDERS_POTION_STRONG));
