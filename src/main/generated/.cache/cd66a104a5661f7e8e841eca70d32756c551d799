@@ -23,6 +23,7 @@ a71b8c43c4c52701d3099d26744f31943bff74ab assets/willow/items/kindling.json
 35e3727fe1de0d5ad5ac2f131d142dfee36e5e45 assets/willow/items/master_mining_manual.json
 cfde151efd20d7e679c2d1a6c32cbd10806df985 assets/willow/items/master_woodcutting_manual.json
 4f58146a6cc2f6ab2730ea1f36e6ae44a993f250 assets/willow/items/sledgehammer.json
+91f8c789bbd7f4e55a59b72981769c6cf8e256f8 assets/willow/items/spring_salad.json
 1a550ec8851d233ad2b20d0e1b4f29e18193031f assets/willow/items/the_herald.json
 69aa0f53f07b9a2e04aac2b2608f0392d866c36f assets/willow/items/tool_handle.json
 d3eeb957629c6f4c9929a20e06eee543a43dea7f assets/willow/models/item/apprentice_farming_manual.json
@@ -49,5 +50,6 @@ f83a496eff60524f5c8b08a08639b6f2f91145c5 assets/willow/models/item/kindling.json
 26789fa9fa960bf4398657b5578564fc3c08c1d4 assets/willow/models/item/master_mining_manual.json
 60cbe76fdade65f8edf638480e0e0809743821a5 assets/willow/models/item/master_woodcutting_manual.json
 23326f21cd34baae7c0a7e6ce0940bb4614df3d7 assets/willow/models/item/sledgehammer.json
+50d02077f6461bd2e6d7eee36132c01604be779f assets/willow/models/item/spring_salad.json
 325e4ccde2ae07a2b8b65e883a485f23008e268e assets/willow/models/item/the_herald.json
 5ca69418e75f4259ae3c3e0a43b05174322c4f24 assets/willow/models/item/tool_handle.json

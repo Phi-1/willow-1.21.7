@@ -119,7 +119,17 @@ public class WillowRecipeProvider extends FabricRecipeProvider {
                         .criterion(hasItem(Items.FLINT), conditionsFromItem(Items.FLINT))
                         .offerTo(exporter);
 
+                // FOOD
                 offerSmelting(List.of(Items.EGG), RecipeCategory.FOOD, WillowItems.BAKED_EGG, 0.1f, 200, "baked_egg");
+                createShapeless(RecipeCategory.FOOD, WillowItems.SPRING_SALAD, 1)
+                        .input(Items.BEETROOT)
+                        .input(Items.CARROT)
+                        .input(Items.HONEY_BOTTLE)
+                        .input(Items.BOWL)
+                        .group("spring_salad")
+                        .criterion(hasItem(Items.HONEY_BOTTLE), conditionsFromItem(Items.HONEY_BOTTLE))
+                        .offerTo(exporter);
+
                 // NOTE: Only generate these once and then move them to minecraft namespace to replace vanilla recipes
 //                // Wooden Sword
 //                createShapeless(RecipeCategory.COMBAT, Items.WOODEN_SWORD, 1)
