@@ -1,6 +1,8 @@
 // 1.21.7	-999999999-01-01T00:00:00	Willow/WillowRecipeGenerator
 ad2700b7faa31c62839dd6e08f4f88b64744c2ce data/willow/advancement/recipes/brewing/golden_beetroot.json
 a0b1393f63617d1358ebcd665e31dedcfeff07a7 data/willow/advancement/recipes/combat/flint_blade.json
+14568a64bdb8de49345868ddd4db4ce2c7175ecf data/willow/advancement/recipes/food/baked_egg_from_smelting_blue_egg.json
+c9043c24ee6b6e7e2babd86ddaa2df38d9f08966 data/willow/advancement/recipes/food/baked_egg_from_smelting_brown_egg.json
 9a7e714cfcd51b0d464d877f985a4c9f0f6498ae data/willow/advancement/recipes/food/baked_egg_from_smelting_egg.json
 0c0cb58ac79accaf63a2a04318e3f81750408682 data/willow/advancement/recipes/food/spring_salad.json
 5ac2e437c33154a9b09722ab883c0a2de23633f0 data/willow/advancement/recipes/misc/journeymans_logbook.json
@@ -12,6 +14,8 @@ e30aa7a1e1e6464b970e8504bdcd4da7e66c4f6e data/willow/advancement/recipes/tools/f
 0ef3d0824fcd6bc598e62413fc16058797615869 data/willow/advancement/recipes/tools/hammer_of_the_deep.json
 25552b1f81ee4bc492bda4c834b523fa260a2d91 data/willow/advancement/recipes/tools/sledgehammer.json
 e997167e92ce71d1dcf0d61501a0f68c63eb2ba7 data/willow/advancement/recipes/tools/tool_handle.json
+08e2a178a7f0832841059c62d0add90481d94233 data/willow/recipe/baked_egg_from_smelting_blue_egg.json
+619b7a802c7fbfb3e97920ddd56650b5469c7a74 data/willow/recipe/baked_egg_from_smelting_brown_egg.json
 4329dff3ecb8772a6a6858ba8474d84db6565384 data/willow/recipe/baked_egg_from_smelting_egg.json
 18c47efd453158e022eb2264588d00fffef2c8cb data/willow/recipe/flint_axe_head.json
 0185a85e8e4053c264c14cc3f2fd02576dfa1478 data/willow/recipe/flint_blade.json

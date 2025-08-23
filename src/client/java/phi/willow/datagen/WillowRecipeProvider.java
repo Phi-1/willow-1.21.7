@@ -9,6 +9,7 @@ import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.ItemTags;
 import phi.willow.registry.WillowItems;
 
 import java.util.List;
@@ -120,7 +121,7 @@ public class WillowRecipeProvider extends FabricRecipeProvider {
                         .offerTo(exporter);
 
                 // FOOD
-                offerSmelting(List.of(Items.EGG), RecipeCategory.FOOD, WillowItems.BAKED_EGG, 0.1f, 200, "baked_egg");
+                offerSmelting(List.of(Items.EGG, Items.BLUE_EGG, Items.BROWN_EGG), RecipeCategory.FOOD, WillowItems.BAKED_EGG, 0.1f, 200, "baked_egg");
                 createShapeless(RecipeCategory.FOOD, WillowItems.SPRING_SALAD, 1)
                         .input(Items.BEETROOT)
                         .input(Items.CARROT)

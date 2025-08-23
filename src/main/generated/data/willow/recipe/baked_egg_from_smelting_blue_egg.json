@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "group": "baked_egg",
+  "ingredient": "minecraft:blue_egg",
+  "result": {
+    "id": "willow:baked_egg"
+  }
+}
