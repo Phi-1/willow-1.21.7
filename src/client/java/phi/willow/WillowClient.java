@@ -1,6 +1,7 @@
 package phi.willow;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
@@ -20,6 +21,7 @@ import phi.willow.registry.WillowTags;
 import phi.willow.rendering.XPPopupRenderer;
 import phi.willow.screens.LogbookScreen;
 import phi.willow.util.ProfessionUtil;
+import phi.willow.util.TickTimers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,8 @@ public class WillowClient implements ClientModInitializer {
                 handleXPGain(difference);
             });
 		});
+
+        ClientTickEvents.END_WORLD_TICK.register(TickTimers::onClientTick);
 
 		ItemTooltipCallback.EVENT.register((stack, context, type, lines) -> {
 			if (stack.isIn(WillowTags.Items.NOVICE_USABLE_EQUIPMENT))

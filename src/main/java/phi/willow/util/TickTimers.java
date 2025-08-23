@@ -1,6 +1,7 @@
 package phi.willow.util;
 
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,13 @@ public class TickTimers {
     }
 
     public static void onServerTick(ServerWorld world) {
+        TIMERS.addAll(TO_ADD);
+        TO_ADD.clear();
+        tickAll();
+    }
+
+    // NOTE: could take a ClientWorld but that would involve client hooks. This works for now
+    public static void onClientTick(World world) {
         TIMERS.addAll(TO_ADD);
         TO_ADD.clear();
         tickAll();
