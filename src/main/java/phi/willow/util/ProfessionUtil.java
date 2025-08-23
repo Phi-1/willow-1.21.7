@@ -117,13 +117,13 @@ public class ProfessionUtil {
         WillowNetworking.syncPlayerProfessionState(player, state);
     }
 
-    public static void gainBaseXP(Profession profession, ServerPlayerEntity player, boolean goldBonus)
+    public static void gainBaseXP(Profession profession, ServerPlayerEntity player, float modifier, boolean goldBonus)
     {
         ProfessionLevel levelBefore = getProfessionLevel(player, profession);
         int goldFactor = goldBonus ? 8 : 1;
         // TODO: eventually maybe give different amounts of xp based on source, but for now that's too messy
 //        int xpGain = profession.instanceXP * goldFactor * (xpSource.ordinal() + 1);
-        int xpGain = profession.instanceXP * goldFactor;
+        int xpGain = (int) (profession.instanceXP * goldFactor * modifier);
         PlayerProfessionState state = getPlayerState(player);
         state.setXP(profession, state.getXP(profession) + xpGain);
         setPlayerState(player, state);

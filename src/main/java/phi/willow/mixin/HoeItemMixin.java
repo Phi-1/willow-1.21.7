@@ -75,7 +75,7 @@ public class HoeItemMixin {
             final int damagePerCrop = 5;
             // NOTE: item#damage already takes into account unbreaking
             stack.damage(damagePerCrop, player);
-            ProfessionUtil.gainBaseXP(Profession.FARMING, serverPlayer,false);
+            ProfessionUtil.gainBaseXP(Profession.FARMING, serverPlayer, 1, false);
         }
         if (clickedCrop)
             cir.setReturnValue(ActionResult.SUCCESS);

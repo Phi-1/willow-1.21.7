@@ -30,6 +30,7 @@ import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -62,7 +63,8 @@ public class WillowEvents {
         FuelRegistryEvents.BUILD.register(WillowEvents::registerFuelItems);
         TradeOfferHelper.registerWanderingTraderOffers(WillowEvents::addWanderingTraderTrades);
         PlayerBlockBreakEvents.AFTER.register(WillowEvents::gainBlockBreakXP);
-        ServerLivingEntityEvents.AFTER_DAMAGE.register(WillowEvents::gainFightingXP);
+        ServerLivingEntityEvents.AFTER_DAMAGE.register(WillowEvents::gainHurtOrBlockFightingXP);
+        ServerLivingEntityEvents.AFTER_DEATH.register(WillowEvents::gainKillFightingXP);
         // TODO: reenable once fixed
 //        ServerLivingEntityEvents.AFTER_DAMAGE.register(WillowEvents::doSledgehammerKnockback);
 
@@ -310,14 +312,20 @@ public class WillowEvents {
         };
     }
 
-    private static void gainFightingXP(LivingEntity living, DamageSource source, float baseDamageTaken, float damageTaken, boolean blocked)
+    private static void gainHurtOrBlockFightingXP(LivingEntity living, DamageSource source, float baseDamageTaken, float damageTaken, boolean blocked)
     {
         // Increase xp on block
         if (living instanceof ServerPlayerEntity player && blocked)
-            ProfessionUtil.gainBaseXP(Profession.FIGHTING, player, false);
+            ProfessionUtil.gainBaseXP(Profession.FIGHTING, player, 1, false);
         // And on damaging another entity
         else if (source.getAttacker() instanceof ServerPlayerEntity player)
-            ProfessionUtil.gainBaseXP(Profession.FIGHTING, player, false);
+            ProfessionUtil.gainBaseXP(Profession.FIGHTING, player, 1, false);
+    }
+
+    private static void gainKillFightingXP(LivingEntity entity, DamageSource source)
+    {
+        if (source.getAttacker() instanceof ServerPlayerEntity player)
+            ProfessionUtil.gainBaseXP(Profession.FIGHTING, player, 2, false);
     }
 
     private static void gainBlockBreakXP(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity)
@@ -331,20 +339,23 @@ public class WillowEvents {
         {
             if (!ProfessionUtil.canUseToolAtLevel(ProfessionUtil.getProfessionLevel(player, Profession.MINING), stack))
                 return;
-            ProfessionUtil.gainBaseXP(Profession.MINING, serverPlayer, false);
+            float modifier = 1.0f;
+            if (state.isIn(WillowTags.Blocks.VANILLA_ORES))
+                modifier = 3.0f;
+            ProfessionUtil.gainBaseXP(Profession.MINING, serverPlayer, modifier, false);
         }
         else if (stack.isIn(ItemTags.SHOVELS))
         {
             if (!ProfessionUtil.canUseToolAtLevel(ProfessionUtil.getProfessionLevel(player, Profession.MINING), stack))
                 return;
             if (world.random.nextInt(4) == 0)
-                ProfessionUtil.gainBaseXP(Profession.MINING, serverPlayer, false);
+                ProfessionUtil.gainBaseXP(Profession.MINING, serverPlayer, 1,  false);
         }
-        else if (stack.isIn(ItemTags.AXES))
+        else if (stack.isIn(ItemTags.AXES) && state.isIn(BlockTags.LOGS))
         {
             if (!ProfessionUtil.canUseToolAtLevel(ProfessionUtil.getProfessionLevel(player, Profession.WOODCUTTING), stack))
                 return;
-            ProfessionUtil.gainBaseXP(Profession.WOODCUTTING, serverPlayer, false);
+            ProfessionUtil.gainBaseXP(Profession.WOODCUTTING, serverPlayer, 1, false);
         }
     }
 

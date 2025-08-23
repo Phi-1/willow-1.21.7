@@ -23,6 +23,7 @@ public class WillowTags {
     public static class Blocks
     {
         public static TagKey<Block> NEEDS_WOODEN_TOOL = TagKey.of(RegistryKeys.BLOCK, Identifier.of(Willow.MOD_ID, "needs_wooden_tool"));
+        public static TagKey<Block> VANILLA_ORES = TagKey.of(RegistryKeys.BLOCK, Identifier.of(Willow.MOD_ID, "vanilla_ores"));
     }
 
     public static void initialize() {}
