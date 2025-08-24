@@ -30,16 +30,12 @@ public class ProfessionUtil {
 
     public static ProfessionLevel getLevelForXPValue(int xp)
     {
-        ProfessionLevel level = ProfessionLevel.NOVICE;
-        int requiredXP = 0;
-        for (int i = 0; i < ProfessionLevel.values().length; i++)
+        for (ProfessionLevel level : ProfessionLevel.values())
         {
-            level = ProfessionLevel.values()[i];
-            requiredXP += level.xpToNext;
-            if (xp < requiredXP)
-                break;
+            if (xp < level.totalXPForNext)
+                return level;
         }
-        return level;
+        return ProfessionLevel.NOVICE;
     }
 
     public static ProfessionLevel getProfessionLevel(PlayerEntity player, Profession profession)
@@ -61,6 +57,14 @@ public class ProfessionUtil {
             xp -= check.xpToNext;
         }
         return xp;
+    }
+
+    public static int getPlayerLevelsToNextProfessionLevel(PlayerEntity player, Profession profession)
+    {
+        int xp = getXPTowardsNextLevel(player, profession);
+        ProfessionLevel level = getProfessionLevel(player, profession);
+        float fraction = 1 - (float) xp / level.xpToNext;
+        return (int) (level.playerLevelsToNext * fraction);
     }
 
     public static boolean canUseToolAtLevel(ProfessionLevel level, ItemStack tool)
@@ -86,12 +90,14 @@ public class ProfessionUtil {
 
     public static void levelUpWithPlayerLevels(Profession profession, ServerPlayerEntity player)
     {
+        // TODO: there's lots of duplication in functions in this class. Add more options, or cleaner interface on state getter? Basically every function gets the level, even if we already did
         PlayerProfessionState state = getPlayerState(player);
         ProfessionLevel level = getProfessionLevel(player, profession);
-        if (level.playerLevelsToNext == 0 || player.experienceLevel < level.playerLevelsToNext)
+        int requiredLevels = getPlayerLevelsToNextProfessionLevel(player, profession);
+        if (level.playerLevelsToNext == 0 || player.experienceLevel < requiredLevels)
             return;
-        player.setExperienceLevel(player.experienceLevel - level.playerLevelsToNext);
-        state.setXP(profession, state.getXP(profession) + level.xpToNext);
+        player.setExperienceLevel(player.experienceLevel - requiredLevels);
+        state.setXP(profession, state.getXP(profession) + (level.xpToNext - getXPTowardsNextLevel(player, profession)));
         setPlayerState(player, state);
         WillowNetworking.syncPlayerProfessionState(player, state);
     }

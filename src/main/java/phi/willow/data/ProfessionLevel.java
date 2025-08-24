@@ -4,7 +4,7 @@ import phi.willow.util.TickTimers;
 
 public enum ProfessionLevel {
     NOVICE(3 * 64, "Novice", 10),
-    APPRENTICE(3 * 27 * 64, "Apprentice", 30),
+    APPRENTICE(3 * 27 * 64, "Apprentice", 45),
     EXPERT(15 * 27 * 64, "Expert", 100),
     MASTER(0, "Master", 0);
 

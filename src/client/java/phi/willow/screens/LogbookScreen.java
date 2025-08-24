@@ -51,8 +51,7 @@ public class LogbookScreen extends Screen {
         {
             this.rowStarts.add(i * c);
             Profession profession = Profession.values()[i];
-            ProfessionLevel level = ProfessionUtil.getProfessionLevel(player, profession);
-            Text buttonText = getLevelButtonText(level);
+            Text buttonText = getLevelButtonText(player, profession);
             ButtonWidget button = ButtonWidget.builder(buttonText, (btn -> {
                 ClientPlayNetworking.send(new WillowNetworking.TryLevelProfessionC2SPacket(profession));
                 this.close();
@@ -62,9 +61,9 @@ public class LogbookScreen extends Screen {
         }
     }
 
-    private Text getLevelButtonText(ProfessionLevel level)
+    private Text getLevelButtonText(PlayerEntity player, Profession profession)
     {
-        String raw = "  " + level.playerLevelsToNext;
+        String raw = "  " + ProfessionUtil.getPlayerLevelsToNextProfessionLevel(player, profession);
         return Text.literal(raw).withColor(0xFFAAFF66);
     }
 
@@ -72,14 +71,13 @@ public class LogbookScreen extends Screen {
     public void render(DrawContext context, int mouseX, int mouseY, float deltaTicks) {
         super.render(context, mouseX, mouseY, deltaTicks);
         // TODO: chosen expertise if master
-        // TODO: dont show xp out of xp if required is 0
         for (int line = 0; line < rowStarts.size(); line++)
         {
             PlayerEntity player = MinecraftClient.getInstance().player;
             Profession profession = Profession.values()[line];
             ProfessionLevel level = ProfessionUtil.getProfessionLevel(player, profession);
             ButtonWidget button = this.levelButtons.get(line);
-            Text buttonText = getLevelButtonText(level);
+            Text buttonText = getLevelButtonText(player, profession);
             button.setMessage(buttonText);
             button.setWidth(this.textRenderer.getWidth(buttonText) + buttonPadding);
             if (level.playerLevelsToNext == 0)
