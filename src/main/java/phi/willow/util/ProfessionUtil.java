@@ -32,7 +32,7 @@ public class ProfessionUtil {
     {
         for (ProfessionLevel level : ProfessionLevel.values())
         {
-            if (xp < level.totalXPForNext)
+            if (level.xpToNext == 0 || xp < level.totalXPForNext)
                 return level;
         }
         return ProfessionLevel.NOVICE;

@@ -79,7 +79,7 @@ public class XPPopupRenderer {
         int height = context.getScaledWindowHeight();
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
         int x = width / 2 - textRenderer.getWidth(overlay.text) / 2;
-        int y = height / 2 - textRenderer.fontHeight / 2;
+        int y = height / 2 - textRenderer.fontHeight * 2;
         float opacity = overlay.lifeTime > OVERLAY_LIFETIME / 2.0f ? 1.0f : overlay.lifeTime / (OVERLAY_LIFETIME / 2.0f);
         context.drawText(textRenderer, overlay.text, x, y, ColorHelper.fromFloats(opacity, 1.0f, 1.0f, 1.0f), true);
         overlay.lifeTime -= tickCounter.getTickProgress(false);

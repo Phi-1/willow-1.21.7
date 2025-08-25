@@ -279,7 +279,7 @@ public class WillowEvents {
 
     private static Item getManualFor(Profession profession, ProfessionLevel level)
     {
-        return switch(profession)
+        return switch (profession)
         {
             case MINING -> switch (level)
             {
@@ -319,7 +319,9 @@ public class WillowEvents {
             ProfessionUtil.gainBaseXP(Profession.FIGHTING, player, 1, false);
         // And on damaging another entity
         else if (source.getAttacker() instanceof ServerPlayerEntity player)
+        {
             ProfessionUtil.gainBaseXP(Profession.FIGHTING, player, 1, false);
+        }
     }
 
     private static void gainKillFightingXP(LivingEntity entity, DamageSource source)
