@@ -28,24 +28,29 @@ public class BaseManualItem extends Item {
 
     @Override
     public ActionResult use(World world, PlayerEntity player, Hand hand) {
-        if (!(player instanceof ServerPlayerEntity serverPlayer))
-            return ActionResult.SUCCESS;
         ItemStack stack = player.getStackInHand(hand);
         ProfessionLevel playerLevel = ProfessionUtil.getProfessionLevel(player, this.profession);
         int levelDifference = this.level.ordinal() - playerLevel.ordinal();
         if (levelDifference <= 0)
         {
             // Give some preset amount of xp
+            if (!(player instanceof ServerPlayerEntity serverPlayer))
+            {
+                world.playSoundClient(SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 0.6f, 0.8f);
+                return ActionResult.SUCCESS;
+            }
             ProfessionUtil.increaseXP(serverPlayer, this.profession, this.flatXPReward);
             stack.decrementUnlessCreative(1, player);
         }
         else
         {
-            // Else, level profession to this manual's level
-            ProfessionUtil.levelTo(this.level, this.profession, serverPlayer);
-            stack.decrementUnlessCreative(1, player);
+            if (player instanceof ServerPlayerEntity serverPlayer)
+            {
+                // Else, level profession to this manual's level
+                ProfessionUtil.levelTo(this.level, this.profession, serverPlayer);
+                stack.decrementUnlessCreative(1, player);
+            }
         }
-        world.playSound(player, player.getBlockPos(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1.0f, 1.0f);
         return ActionResult.SUCCESS;
     }
 }

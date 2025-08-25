@@ -1,8 +1,15 @@
 package phi.willow.util;
 
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+import phi.willow.Willow;
 import phi.willow.data.*;
 import phi.willow.registry.WillowNetworking;
 import phi.willow.registry.WillowTags;
@@ -99,7 +106,9 @@ public class ProfessionUtil {
         player.setExperienceLevel(player.experienceLevel - requiredLevels);
         state.setXP(profession, state.getXP(profession) + (level.xpToNext - getXPTowardsNextLevel(player, profession)));
         setPlayerState(player, state);
+        ProfessionLevel newLevel = ProfessionUtil.getProfessionLevel(player, profession);
         WillowNetworking.syncPlayerProfessionState(player, state);
+        onPlayerLevelup(player, profession, newLevel);
     }
 
     public static void levelTo(ProfessionLevel level, Profession profession, ServerPlayerEntity player)
@@ -113,32 +122,66 @@ public class ProfessionUtil {
         state.setXP(profession, current + diff);
         setPlayerState(player, state);
         WillowNetworking.syncPlayerProfessionState(player, state);
+        onPlayerLevelup(player, profession, level);
     }
 
     public static void increaseXP(ServerPlayerEntity player, Profession profession, int amount)
     {
+        ProfessionLevel levelBefore = getProfessionLevel(player, profession);
         PlayerProfessionState state = getPlayerState(player);
         state.setXP(profession, state.getXP(profession) + amount);
         setPlayerState(player, state);
+        ProfessionLevel newLevel = getProfessionLevel(player, profession);
         WillowNetworking.syncPlayerProfessionState(player, state);
+        if (levelBefore != newLevel)
+            onPlayerLevelup(player, profession, newLevel);
     }
 
     public static void gainBaseXP(Profession profession, ServerPlayerEntity player, float modifier, boolean goldBonus)
     {
         ProfessionLevel levelBefore = getProfessionLevel(player, profession);
         int goldFactor = goldBonus ? 8 : 1;
-        // TODO: eventually maybe give different amounts of xp based on source, but for now that's too messy
-//        int xpGain = profession.instanceXP * goldFactor * (xpSource.ordinal() + 1);
         int xpGain = (int) (profession.instanceXP * goldFactor * modifier);
         PlayerProfessionState state = getPlayerState(player);
         state.setXP(profession, state.getXP(profession) + xpGain);
         setPlayerState(player, state);
         // TODO: replace with more specific packet, like was a golden tool used, how much xp increase and in which profession. Would also fix the login levelup sound bug
-        // TODO: separate packet for levelup
         WillowNetworking.syncPlayerProfessionState(player, state);
-//        if (levelBefore != getProfessionLevel(player, profession))
-//            pass;
-            // TODO: then its a level up
+        ProfessionLevel newLevel = getProfessionLevel(player, profession);
+        if (levelBefore != newLevel)
+            onPlayerLevelup(player, profession, newLevel);
+    }
+
+    public static void onPlayerLevelup(ServerPlayerEntity player, Profession profession, ProfessionLevel level)
+    {
+        for (ServerPlayerEntity p : player.getServer().getPlayerManager().getPlayerList())
+            p.sendMessage(Text.literal(player.getNameForScoreboard() + " has reached " + level.label + " in " + profession.label + "!"));
+        ServerPlayNetworking.send(player, new LevelupS2CPacket(profession, level));
+    }
+
+    public record LevelupS2CPacket(Profession profession, ProfessionLevel level) implements CustomPayload
+    {
+        public static final Identifier PACKET_ID = Identifier.of(Willow.MOD_ID, "levelup_s2c_packet");
+        public static final Id<LevelupS2CPacket> ID = new CustomPayload.Id<>(PACKET_ID);
+        public static final PacketCodec<RegistryByteBuf, LevelupS2CPacket> PACKET_CODEC = PacketCodec.of(LevelupS2CPacket::encode, LevelupS2CPacket::decode);
+
+        public static LevelupS2CPacket decode(RegistryByteBuf buf)
+        {
+            Profession profession = Profession.values()[buf.readInt()];
+            ProfessionLevel level = ProfessionLevel.values()[buf.readInt()];
+            return new LevelupS2CPacket(profession, level);
+        }
+
+        public void encode(RegistryByteBuf buf)
+        {
+            buf.writeInt(profession.ordinal());
+            buf.writeInt(level.ordinal());
+        }
+
+        @Override
+        public Id<? extends CustomPayload> getId() {
+            return ID;
+        }
     }
 
 }

@@ -20,6 +20,7 @@ public class WillowNetworking {
     {
         PayloadTypeRegistry.playC2S().register(TryLevelProfessionC2SPacket.ID, TryLevelProfessionC2SPacket.PACKET_CODEC);
         PayloadTypeRegistry.playS2C().register(PlayerProfessionState.PlayerProfessionStatePayload.ID, PlayerProfessionState.PlayerProfessionStatePayload.PACKET_CODEC);
+        PayloadTypeRegistry.playS2C().register(ProfessionUtil.LevelupS2CPacket.ID, ProfessionUtil.LevelupS2CPacket.PACKET_CODEC);
 
         ServerPlayNetworking.registerGlobalReceiver(TryLevelProfessionC2SPacket.ID, (packet, context) -> {
             context.server().execute(() -> ProfessionUtil.levelUpWithPlayerLevels(packet.profession, context.player()));

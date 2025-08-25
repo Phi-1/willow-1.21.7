@@ -40,6 +40,12 @@ public class WillowClient implements ClientModInitializer {
             });
 		});
 
+        ClientPlayNetworking.registerGlobalReceiver(ProfessionUtil.LevelupS2CPacket.ID, ((payload, context) -> {
+            context.client().execute(() -> {
+                handleLevelup(payload.profession(), payload.level());
+            });
+        }));
+
         ClientTickEvents.END_WORLD_TICK.register(TickTimers::onClientTick);
 
 		ItemTooltipCallback.EVENT.register((stack, context, type, lines) -> {
@@ -56,10 +62,6 @@ public class WillowClient implements ClientModInitializer {
         HudElementRegistry.addLast(Identifier.of(Willow.MOD_ID, "xp_popup_layer"), XPPopupRenderer::render);
 	}
 
-    /**
-     *
-     * @return A mapping from each profession to the difference in xp with the old state, and whether it leveled up
-     */
     private List<XPDiff> computeDifference(PlayerProfessionState newState)
     {
         List<XPDiff> differences = new ArrayList<>();
@@ -85,8 +87,9 @@ public class WillowClient implements ClientModInitializer {
             // Stop showing popups at max level
             if (diff.level != ProfessionLevel.MASTER)
                 XPPopupRenderer.createPopup(diff.profession, diff.level);
-            if (diff.isLevelup)
-                handleLevelup(diff.profession, diff.level);
+            // TODO: remove levelup check from diff, handled with packet now
+//            if (diff.isLevelup)
+//                handleLevelup(diff.profession, diff.level);
         }
     }
 
@@ -95,7 +98,6 @@ public class WillowClient implements ClientModInitializer {
         World world = MinecraftClient.getInstance().world;
         if (world == null)
             return;
-        // TODO: Send chat message to everyone
         XPPopupRenderer.createLevelupNotification(profession, level);
         world.playSoundClient(SoundEvents.GOAT_HORN_SOUNDS.get(2).value(), SoundCategory.UI, 1.0f, 1.0f);
     }
