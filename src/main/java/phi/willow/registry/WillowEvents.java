@@ -320,7 +320,9 @@ public class WillowEvents {
         // And on damaging another entity
         else if (source.getAttacker() instanceof ServerPlayerEntity player)
         {
-            ProfessionUtil.gainBaseXP(Profession.FIGHTING, player, 1, false);
+            // Gain 1 flat xp on small hits
+            float modifier = baseDamageTaken <= 1 ? 1.0f / (float) Profession.FIGHTING.instanceXP : 1.0f;
+            ProfessionUtil.gainBaseXP(Profession.FIGHTING, player, modifier, false);
         }
     }
 
