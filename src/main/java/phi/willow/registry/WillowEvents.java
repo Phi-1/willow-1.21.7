@@ -324,7 +324,7 @@ public class WillowEvents {
 
     private static void gainKillFightingXP(LivingEntity entity, DamageSource source)
     {
-        if (source.getAttacker() instanceof ServerPlayerEntity player)
+        if (source.getAttacker() instanceof ServerPlayerEntity player && entity instanceof HostileEntity)
             ProfessionUtil.gainBaseXP(Profession.FIGHTING, player, 2, false);
     }
 

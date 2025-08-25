@@ -8,6 +8,7 @@ import phi.willow.registry.*;
 
 public class Willow implements ModInitializer {
 
+    // TODO: fishing profession, once mastery / other talents are in
     // TODO: add manuals to librarian trades
 	// TODO: Item#onItemEntityDestroyed is a really cool event for custom crafting shenanigans
 	// TODO: HUD indicators when holding/wearing stuff you dont have proficiency for?
