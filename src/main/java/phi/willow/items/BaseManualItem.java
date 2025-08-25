@@ -4,6 +4,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -36,11 +38,14 @@ public class BaseManualItem extends Item {
             // Give some preset amount of xp
             ProfessionUtil.increaseXP(serverPlayer, this.profession, this.flatXPReward);
             stack.decrementUnlessCreative(1, player);
-            return ActionResult.SUCCESS;
         }
-        // Else, level profession to this manual's level
-        ProfessionUtil.levelTo(this.level, this.profession, serverPlayer);
-        stack.decrementUnlessCreative(1, player);
+        else
+        {
+            // Else, level profession to this manual's level
+            ProfessionUtil.levelTo(this.level, this.profession, serverPlayer);
+            stack.decrementUnlessCreative(1, player);
+        }
+        world.playSound(player, player.getBlockPos(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1.0f, 1.0f);
         return ActionResult.SUCCESS;
     }
 }
