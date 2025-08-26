@@ -20,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import phi.willow.data.Profession;
 import phi.willow.data.ProfessionLevel;
 import phi.willow.registry.WillowEffectsAndPotions;
+import phi.willow.registry.WillowItems;
 import phi.willow.statuseffects.LightningResistanceStatusEffect;
 import phi.willow.util.ProfessionUtil;
 
