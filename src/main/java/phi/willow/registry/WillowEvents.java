@@ -132,27 +132,27 @@ public class WillowEvents {
         }
         else if (key == LootTables.BASTION_BRIDGE_CHEST)
         {
-            addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.2f);
-            addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.1f);
+            addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.3f);
+            addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.2f);
             pool.rolls(ConstantLootNumberProvider.create(2.0f));
         }
         else if (key == LootTables.BASTION_HOGLIN_STABLE_CHEST)
         {
-            addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.2f);
-            addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.1f);
+            addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.3f);
+            addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.2f);
             pool.rolls(ConstantLootNumberProvider.create(2.0f));
         }
         else if (key == LootTables.BASTION_OTHER_CHEST)
         {
-            addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.2f);
-            addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.1f);
+            addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.3f);
+            addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.2f);
             pool.rolls(ConstantLootNumberProvider.create(2.0f));
         }
         else if (key == LootTables.BASTION_TREASURE_CHEST)
         {
             addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.2f);
-            addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.1f);
-            addAllManualsOfLevel(pool, ProfessionLevel.MASTER, 0.01f);
+            addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.15f);
+            addAllManualsOfLevel(pool, ProfessionLevel.MASTER, 0.02f);
             pool.rolls(ConstantLootNumberProvider.create(3.0f));
         }
         else if (key == LootTables.BURIED_TREASURE_CHEST)
