@@ -46,6 +46,7 @@ public abstract class PlayerEntityMixin {
             cir.setReturnValue(cir.getReturnValueF() * ATTACK_SPEED_FACTOR);
     }
 
+    // TODO: replace shift with a putfield redirect -> mixin examples
     @Inject(method = "getBlockBreakingSpeed", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getMiningSpeedMultiplier(Lnet/minecraft/block/BlockState;)F", shift = At.Shift.BY, by = 2))
     public void getBlockBreakingSpeed(BlockState block, CallbackInfoReturnable<Float> cir, @Local(ordinal = 0) LocalFloatRef f)
     {

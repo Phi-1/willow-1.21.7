@@ -10,6 +10,7 @@
     "CropBlockInvoker",
     "FireworkRocketEntityMixin",
     "HoeItemMixin",
+    "HungerManagerMixin",
     "ItemMixin",
     "PlayerEntityMixin",
     "ServerPlayerInteractionManagerMixin",
