@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "egg_sandwich",
+  "ingredients": [
+    "minecraft:bread",
+    "willow:baked_egg",
+    "willow:baked_egg",
+    "minecraft:dried_kelp"
+  ],
+  "result": {
+    "count": 1,
+    "id": "willow:egg_sandwich"
+  }
+}

@@ -52,6 +52,7 @@ public class WillowModelProvider extends FabricModelProvider {
 
         itemModelGenerator.register(WillowItems.BAKED_EGG, Models.GENERATED);
         itemModelGenerator.register(WillowItems.SPRING_SALAD, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.EGG_SANDWICH, Models.GENERATED);
     }
 
 }
