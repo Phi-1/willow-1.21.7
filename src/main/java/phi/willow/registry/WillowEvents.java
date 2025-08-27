@@ -127,7 +127,7 @@ public class WillowEvents {
         {
             addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.3f);
             addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.2f);
-            addAllManualsOfLevel(pool, ProfessionLevel.MASTER, 0.05f);
+            addAllManualsOfLevel(pool, ProfessionLevel.MASTER, 0.04f);
             pool.rolls(ConstantLootNumberProvider.create(3.0f));
         }
         else if (key == LootTables.BASTION_BRIDGE_CHEST)
