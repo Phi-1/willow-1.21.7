@@ -98,7 +98,7 @@ public class AppleBlossomLeavesBlock extends TintedParticleLeavesBlock {
     protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         boolean seasons = FabricLoader.getInstance().isModLoaded("sereneseasons");
         // Grow apples
-        if (!state.get(HAS_APPLES) && random.nextInt(100) == 0) {
+        if (!state.get(HAS_APPLES) && random.nextInt(300) == 0) {
             if (seasons) {
                 if (isInSeason(world, pos))
                     tryGrowApples(world, pos, state);
