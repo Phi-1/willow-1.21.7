@@ -5,14 +5,12 @@ import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.item.HoeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import phi.willow.Willow;
@@ -20,6 +18,7 @@ import phi.willow.data.Profession;
 import phi.willow.data.ProfessionLevel;
 import phi.willow.items.*;
 
+import java.util.List;
 import java.util.function.Function;
 
 public class WillowItems {
@@ -70,6 +69,20 @@ public class WillowItems {
     public static final Item FLINT_BLADE = register("flint_blade", Item::new, new Item.Settings());
     public static final Item JOURNEYMANS_LOGBOOK = register("journeymans_logbook", JourneymansLogbookItem::new, new Item.Settings());
     public static final Item KINDLING = register("kindling", Item::new, new Item.Settings());
+    public static final Item ECHOIC_CATALYST = register("echoic_catalyst", Item::new, new Item.Settings());
+    public static final Item ECHOIC_UPGRADE_SMITHING_TEMPLATE = register("echoic_upgrade_smithing_template", settings ->
+        new SmithingTemplateItem(
+                // TODO: translatable
+                // TODO: any other items here too
+                Text.literal("Sledgehammer"),
+                Text.literal("Echoic Catalyst"),
+                // TODO: if any other items end up using this template, add here
+                Text.literal("Add Sledgehammer"),
+                Text.literal("Add Echoic Catalyst"),
+                List.of(Identifier.ofVanilla("container/slot/pickaxe")),
+                List.of(Identifier.ofVanilla("container/slot/ingot")),
+                settings
+        ), new Item.Settings().rarity(Rarity.UNCOMMON));
 
     // Ingredients
     public static final Item GOLDEN_BEETROOT = register("golden_beetroot", Item::new, new Item.Settings());

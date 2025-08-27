@@ -60,6 +60,7 @@ public class WillowEvents {
         LootTableEvents.MODIFY.register(WillowEvents::addStickDropToLeaves);
         LootTableEvents.MODIFY.register(WillowEvents::addHeraldDrop);
         LootTableEvents.MODIFY.register(WillowEvents::addManualsToLootTables);
+        LootTableEvents.MODIFY.register(WillowEvents::addSmithingTemplatesToLootTables);
         FuelRegistryEvents.BUILD.register(WillowEvents::registerFuelItems);
         TradeOfferHelper.registerWanderingTraderOffers(WillowEvents::addWanderingTraderTrades);
         PlayerBlockBreakEvents.AFTER.register(WillowEvents::gainBlockBreakXP);
@@ -96,6 +97,15 @@ public class WillowEvents {
             mob.takeKnockback(strength, player.getX() - mob.getX(), player.getZ() - mob.getZ());
         }
         player.getWorld().playSound(null, player.getBlockPos(), SoundEvents.ENTITY_DRAGON_FIREBALL_EXPLODE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+    }
+
+    private static void addSmithingTemplatesToLootTables(RegistryKey<LootTable> key, LootTable.Builder builder, LootTableSource source, RegistryWrapper.WrapperLookup registries)
+    {
+        LootPool.Builder pool = LootPool.builder();
+        if (key == LootTables.ANCIENT_CITY_CHEST)
+        {
+            pool.with(ItemEntry.builder(WillowItems.ECHOIC_UPGRADE_SMITHING_TEMPLATE).conditionally(RandomChanceLootCondition.builder(0.2f)));
+        }
     }
 
     private static void addManualsToLootTables(RegistryKey<LootTable> key, LootTable.Builder builder, LootTableSource source, RegistryWrapper.WrapperLookup registries)
@@ -179,8 +189,8 @@ public class WillowEvents {
         }
         else if (key == LootTables.NETHER_BRIDGE_CHEST)
         {
-            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.1f, Profession.FIGHTING, Profession.FARMING, Profession.MINING);
-            addManualsOfProfessions(pool, ProfessionLevel.EXPERT, 0.05f, Profession.FIGHTING, Profession.FARMING, Profession.MINING);
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.2f, Profession.FIGHTING, Profession.FARMING, Profession.MINING);
+            addManualsOfProfessions(pool, ProfessionLevel.EXPERT, 0.1f, Profession.FIGHTING, Profession.FARMING, Profession.MINING);
             pool.rolls(ConstantLootNumberProvider.create(2.0f));
         }
         else if (key == LootTables.PILLAGER_OUTPOST_CHEST)

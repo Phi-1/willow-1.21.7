@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "willow:hammer_of_the_deep"
+        "recipe": "willow:echoic_catalyst"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "willow:hammer_of_the_deep"
+      "willow:echoic_catalyst"
     ]
   }
 }

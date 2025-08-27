@@ -29,6 +29,8 @@ public class WillowModelProvider extends FabricModelProvider {
 
         itemModelGenerator.register(WillowItems.KINDLING, Models.GENERATED);
         itemModelGenerator.register(WillowItems.GOLDEN_BEETROOT, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.ECHOIC_CATALYST, Models.GENERATED);
+        itemModelGenerator.register(WillowItems.ECHOIC_UPGRADE_SMITHING_TEMPLATE, Models.GENERATED);
 
         itemModelGenerator.register(WillowItems.TOOL_HANDLE, Models.GENERATED);
         itemModelGenerator.register(WillowItems.FLINT_HOE_HEAD, Models.GENERATED);

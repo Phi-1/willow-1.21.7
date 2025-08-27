@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "willow:echoic_catalyst",
+  "base": "willow:sledgehammer",
+  "result": {
+    "id": "willow:hammer_of_the_deep"
+  },
+  "template": "willow:echoic_upgrade_smithing_template"
+}

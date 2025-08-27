@@ -40,6 +40,8 @@ public class WillowLanguageProvider extends FabricLanguageProvider {
 
         translationBuilder.add(WillowItems.KINDLING, "Kindling");
         translationBuilder.add(WillowItems.GOLDEN_BEETROOT, "Golden Beetroot");
+        translationBuilder.add(WillowItems.ECHOIC_CATALYST, "Echoic Catalyst");
+        translationBuilder.add(WillowItems.ECHOIC_UPGRADE_SMITHING_TEMPLATE, "Echoic Upgrade Smithing Template");
 
         translationBuilder.add(WillowItems.TOOL_HANDLE, "Tool Handle");
         translationBuilder.add(WillowItems.FLINT_AXE_HEAD, "Flint Axe Head");

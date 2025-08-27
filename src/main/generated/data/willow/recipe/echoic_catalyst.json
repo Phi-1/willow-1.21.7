@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "echoic_catalyst",
+  "key": {
+    "d": "minecraft:diamond",
+    "s": "minecraft:echo_shard"
+  },
+  "pattern": [
+    "sds",
+    "dsd",
+    "sds"
+  ],
+  "result": {
+    "count": 1,
+    "id": "willow:echoic_catalyst"
+  }
+}
