@@ -43,9 +43,8 @@ public class WillowRecipeProvider extends FabricRecipeProvider {
                 // Hammer of the Deep
                 offerSmithingTemplateCopyingRecipe(WillowItems.ECHOIC_UPGRADE_SMITHING_TEMPLATE, Items.SCULK);
                 createShaped(RecipeCategory.TOOLS, WillowItems.ECHOIC_CATALYST, 1)
-                        .pattern("sds")
-                        .pattern("dsd")
-                        .pattern("sds")
+                        .pattern("sd")
+                        .pattern("ds")
                         .input('s', Items.ECHO_SHARD)
                         .input('d', Items.DIAMOND)
                         .group("echoic_catalyst")
@@ -60,17 +59,6 @@ public class WillowRecipeProvider extends FabricRecipeProvider {
                 )
                         .criterion(hasItem(WillowItems.ECHOIC_UPGRADE_SMITHING_TEMPLATE), conditionsFromItem(WillowItems.ECHOIC_UPGRADE_SMITHING_TEMPLATE))
                         .offerTo(exporter, getItemPath(WillowItems.HAMMER_OF_THE_DEEP) + "_smithing");
-//                createShaped(RecipeCategory.TOOLS, WillowItems.HAMMER_OF_THE_DEEP, 1)
-//                        .pattern("ede")
-//                        .pattern("dhd")
-//                        .pattern(" s ")
-//                        .input('e', Items.ECHO_SHARD)
-//                        .input('d', Items.DIAMOND)
-//                        .input('h', WillowItems.SLEDGEHAMMER)
-//                        .input('s', Items.STICK)
-//                        .group("hammer_of_the_deep")
-//                        .criterion(hasItem(Items.ECHO_SHARD), conditionsFromItem(Items.ECHO_SHARD))
-//                        .offerTo(exporter);
                 // Kindling
                 createShapeless(RecipeCategory.MISC, WillowItems.KINDLING, 1)
                         .input(Items.STICK, 4)

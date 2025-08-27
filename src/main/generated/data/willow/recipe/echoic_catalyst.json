@@ -7,9 +7,8 @@
     "s": "minecraft:echo_shard"
   },
   "pattern": [
-    "sds",
-    "dsd",
-    "sds"
+    "sd",
+    "ds"
   ],
   "result": {
     "count": 1,
