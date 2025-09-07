@@ -39,7 +39,7 @@ import java.util.List;
 public class TheHeraldItem extends AxeItem {
 
     public TheHeraldItem(Settings settings) {
-        super(WillowToolMaterials.THE_HERALD, 7.0f, -3.0f, settings
+        super(WillowToolMaterials.THE_HERALD, 9.0f, -3.0f, settings
                 .fireproof()
                 .rarity(Rarity.EPIC));
     }
@@ -79,10 +79,10 @@ public class TheHeraldItem extends AxeItem {
         ItemCooldownManager cooldownManager = player.getItemCooldownManager();
         if (cooldownManager.isCoolingDown(stack))
             return;
-        final int effectRadius = 8;
+        final int effectRadius = 12;
         final int bonusBolts = 2;
         // NOTE: keep above 10 ticks so iframes settle
-        final int effectDelayTicks = 12;
+        final int effectDelayTicks = 18;
         List<MobEntity> mobs = target.getWorld().getEntitiesByClass(MobEntity.class, Box.of(target.getEyePos(), effectRadius, effectRadius, effectRadius), mob -> true);
         for (int i = 0; i < mobs.size() + bonusBolts; i++)
         {
@@ -105,7 +105,7 @@ public class TheHeraldItem extends AxeItem {
                 }
             }, effectDelayTicks + effectDelayTicks * i);
         }
-        final int cooldownTicks = 4 * 20;
+        final int cooldownTicks = 8 * 20;
         cooldownManager.set(stack, cooldownTicks);
     }
 
