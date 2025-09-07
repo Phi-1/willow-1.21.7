@@ -1,5 +1,6 @@
 package phi.willow.items;
 
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -9,6 +10,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.ItemCooldownManager;
@@ -42,6 +45,12 @@ public class TheHeraldItem extends AxeItem {
         super(WillowToolMaterials.THE_HERALD, 9.0f, -3.0f, settings
                 .fireproof()
                 .rarity(Rarity.EPIC));
+        ServerLivingEntityEvents.ALLOW_DAMAGE.register(TheHeraldItem::resistLightningDamageWhileHolding);
+    }
+
+    private static boolean resistLightningDamageWhileHolding(LivingEntity entity, DamageSource damageSource, float damage)
+    {
+        return !damageSource.isOf(DamageTypes.LIGHTNING_BOLT) || !(entity instanceof PlayerEntity player) || !player.getMainHandStack().isOf(WillowItems.THE_HERALD);
     }
 
     @Override
@@ -87,7 +96,6 @@ public class TheHeraldItem extends AxeItem {
         for (int i = 0; i < mobs.size() + bonusBolts; i++)
         {
             TickTimers.schedule(() -> {
-                player.addStatusEffect(new StatusEffectInstance(WillowEffectsAndPotions.LIGHTNING_RESISTANCE, effectDelayTicks, 1));
                 int maxSearches = mobs.size();
                 int searches = 0;
                 while (true)
