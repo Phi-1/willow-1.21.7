@@ -140,6 +140,14 @@ public class WillowRecipeProvider extends FabricRecipeProvider {
                         .group("spring_salad")
                         .criterion(hasItem(Items.HONEY_BOTTLE), conditionsFromItem(Items.HONEY_BOTTLE))
                         .offerTo(exporter);
+                createShapeless(RecipeCategory.FOOD, WillowItems.POTATO_SALAD, 1)
+                        .input(Items.BAKED_POTATO)
+                        .input(WillowItems.BAKED_EGG)
+                        .input(Items.SWEET_BERRIES)
+                        .input(Items.BOWL)
+                        .group("potato_salad")
+                        .criterion(hasItem(Items.BAKED_POTATO), conditionsFromItem(Items.BAKED_POTATO))
+                        .offerTo(exporter);
                 createShapeless(RecipeCategory.FOOD, WillowItems.EGG_SANDWICH, 1)
                         .input(Items.BREAD)
                         .input(WillowItems.BAKED_EGG, 2)

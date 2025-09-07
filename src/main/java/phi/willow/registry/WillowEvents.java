@@ -59,6 +59,7 @@ public class WillowEvents {
         ServerTickEvents.END_WORLD_TICK.register(TickTimers::onServerTick);
         LootTableEvents.MODIFY.register(WillowEvents::addStickDropToLeaves);
         LootTableEvents.MODIFY.register(WillowEvents::addHeraldDrop);
+        // TODO: see if loot table key can be used to get identifier of structory and terralith loot tables, then add to those if present
         LootTableEvents.MODIFY.register(WillowEvents::addManualsToLootTables);
         LootTableEvents.MODIFY.register(WillowEvents::addSmithingTemplatesToLootTables);
         FuelRegistryEvents.BUILD.register(WillowEvents::registerFuelItems);

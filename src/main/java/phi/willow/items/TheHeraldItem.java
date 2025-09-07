@@ -50,7 +50,9 @@ public class TheHeraldItem extends AxeItem {
 
     private static boolean resistLightningDamageWhileHolding(LivingEntity entity, DamageSource damageSource, float damage)
     {
-        return !damageSource.isOf(DamageTypes.LIGHTNING_BOLT) || !(entity instanceof PlayerEntity player) || !player.getMainHandStack().isOf(WillowItems.THE_HERALD);
+        if (damageSource.isOf(DamageTypes.LIGHTNING_BOLT) && entity instanceof PlayerEntity player && player.getMainHandStack().isOf(WillowItems.THE_HERALD))
+            return false;
+        return true;
     }
 
     @Override
@@ -96,6 +98,7 @@ public class TheHeraldItem extends AxeItem {
         for (int i = 0; i < mobs.size() + bonusBolts; i++)
         {
             TickTimers.schedule(() -> {
+//                player.addStatusEffect(new StatusEffectInstance(WillowEffectsAndPotions.LIGHTNING_RESISTANCE, effectDelayTicks, 1));
                 int maxSearches = mobs.size();
                 int searches = 0;
                 while (true)
