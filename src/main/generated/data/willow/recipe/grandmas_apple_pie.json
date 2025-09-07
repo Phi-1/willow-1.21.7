@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "grandmas_apple_pie",
+  "ingredients": [
+    "minecraft:wheat",
+    "minecraft:wheat",
+    "minecraft:wheat",
+    "minecraft:apple",
+    "minecraft:apple",
+    "minecraft:apple",
+    "minecraft:milk_bucket",
+    "minecraft:sugar",
+    "minecraft:glow_berries"
+  ],
+  "result": {
+    "count": 4,
+    "id": "willow:grandmas_apple_pie"
+  }
+}

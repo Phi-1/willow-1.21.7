@@ -73,10 +73,10 @@ public class HoeItemMixin {
             player.getWorld().breakBlock(harvestPos, true);
             player.getWorld().setBlockState(harvestPos, state.with(age, 0));
             // TODO: find good damage value
-            final int damagePerCrop = 5;
+            final int damagePerCrop = 3;
             // NOTE: item#damage already takes into account unbreaking
             stack.damage(damagePerCrop, player, LivingEntity.getSlotForHand(context.getHand()));
-            ProfessionUtil.gainBaseXP(Profession.FARMING, serverPlayer, 1, false);
+            ProfessionUtil.gainBaseXP(Profession.FARMING, serverPlayer, toolLevel.ordinal() + 1, false);
         }
         if (clickedCrop)
             cir.setReturnValue(ActionResult.SUCCESS);

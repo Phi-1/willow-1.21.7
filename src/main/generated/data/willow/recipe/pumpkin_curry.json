@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "pumpkin_curry",
+  "ingredients": [
+    "minecraft:beetroot",
+    "minecraft:brown_mushroom",
+    "minecraft:pumpkin",
+    "minecraft:pumpkin",
+    "minecraft:bowl"
+  ],
+  "result": {
+    "count": 1,
+    "id": "willow:pumpkin_curry"
+  }
+}

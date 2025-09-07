@@ -4,7 +4,7 @@ public enum Profession {
     // TODO: instance xp, basically mult on how much xp each instance of xp gain gives, because it makes sense you'd have to mine much more stone than chop logs for the same level
     MINING("Mining", 1),
     WOODCUTTING("Woodcutting", 3),
-    FARMING("Farming", 6),
+    FARMING("Farming", 3),
     FIGHTING("Fighting", 6);
 
     public final String label;

@@ -18,6 +18,7 @@ d2a3542f7c3fad144986db4a49d2cd4423bbb8e2 assets/willow/items/flint_hoe_head.json
 8ada0859834b30f3ea505d85ea8f02c57ecb317f assets/willow/items/flint_pickaxe_head.json
 8e421287c13f4d8529c4ef414585d419a1072649 assets/willow/items/flint_shovel_head.json
 01406e839fa53a4cf84dc5eaafa6e400b61d8875 assets/willow/items/golden_beetroot.json
+e4ce26f6ea63ed62d86490c9995a10f8e1b9c50c assets/willow/items/grandmas_apple_pie.json
 4b794f1509a61247f4fd435d5d1a70fc7ace73a3 assets/willow/items/hammer_of_the_deep.json
 88c3d41f580e14c38066e1227c00b3f20c42142c assets/willow/items/journeymans_logbook.json
 a71b8c43c4c52701d3099d26744f31943bff74ab assets/willow/items/kindling.json
@@ -25,6 +26,7 @@ a71b8c43c4c52701d3099d26744f31943bff74ab assets/willow/items/kindling.json
 0f0a2cba9d89271327f1deb6525e9085ceeaa526 assets/willow/items/master_fighting_manual.json
 35e3727fe1de0d5ad5ac2f131d142dfee36e5e45 assets/willow/items/master_mining_manual.json
 cfde151efd20d7e679c2d1a6c32cbd10806df985 assets/willow/items/master_woodcutting_manual.json
+7fe0650772dc0fa4c5aed2d82fd9fd829908c6d4 assets/willow/items/pumpkin_curry.json
 4f58146a6cc2f6ab2730ea1f36e6ae44a993f250 assets/willow/items/sledgehammer.json
 91f8c789bbd7f4e55a59b72981769c6cf8e256f8 assets/willow/items/spring_salad.json
 1a550ec8851d233ad2b20d0e1b4f29e18193031f assets/willow/items/the_herald.json
@@ -48,6 +50,7 @@ c95236066fb5bc327f14d402703e71d5fd21fb62 assets/willow/models/item/flint_blade.j
 e9e17b0e9f7e1b978eea47ebc7cc80aff99d5c39 assets/willow/models/item/flint_pickaxe_head.json
 eb3b3985ecd1b58d098500b58b265effef925cb7 assets/willow/models/item/flint_shovel_head.json
 e8ea781f352509111b18c68f13b06383951bd5ef assets/willow/models/item/golden_beetroot.json
+78793a8fa4956863914cac040edf57f8d250059e assets/willow/models/item/grandmas_apple_pie.json
 75a2898be45169dafd04495f20c8d2dc591c33a5 assets/willow/models/item/hammer_of_the_deep.json
 e94a3937010a6c1573b9fc17ff75a49a1568006c assets/willow/models/item/journeymans_logbook.json
 f83a496eff60524f5c8b08a08639b6f2f91145c5 assets/willow/models/item/kindling.json
@@ -55,6 +58,7 @@ f83a496eff60524f5c8b08a08639b6f2f91145c5 assets/willow/models/item/kindling.json
 4d071cabf43d8a1df3f83a8b3c3cf43bd9133b26 assets/willow/models/item/master_fighting_manual.json
 26789fa9fa960bf4398657b5578564fc3c08c1d4 assets/willow/models/item/master_mining_manual.json
 60cbe76fdade65f8edf638480e0e0809743821a5 assets/willow/models/item/master_woodcutting_manual.json
+b85f4ec6f2b9d04ca80a002a5e6297868ef8516e assets/willow/models/item/pumpkin_curry.json
 23326f21cd34baae7c0a7e6ce0940bb4614df3d7 assets/willow/models/item/sledgehammer.json
 50d02077f6461bd2e6d7eee36132c01604be779f assets/willow/models/item/spring_salad.json
 325e4ccde2ae07a2b8b65e883a485f23008e268e assets/willow/models/item/the_herald.json

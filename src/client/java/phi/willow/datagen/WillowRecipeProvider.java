@@ -147,6 +147,23 @@ public class WillowRecipeProvider extends FabricRecipeProvider {
                         .group("egg_sandwich")
                         .criterion(hasItem(WillowItems.BAKED_EGG), conditionsFromItem(WillowItems.BAKED_EGG))
                         .offerTo(exporter);
+                createShapeless(RecipeCategory.FOOD, WillowItems.GRANDMAS_APPLE_PIE, 4)
+                        .input(Items.WHEAT, 3)
+                        .input(Items.APPLE, 3)
+                        .input(Items.MILK_BUCKET, 1)
+                        .input(Items.SUGAR, 1)
+                        .input(Items.GLOW_BERRIES, 1)
+                        .group("grandmas_apple_pie")
+                        .criterion(hasItem(Items.APPLE), conditionsFromItem(Items.APPLE))
+                        .offerTo(exporter);
+                createShapeless(RecipeCategory.FOOD, WillowItems.PUMPKIN_CURRY, 1)
+                        .input(Items.BEETROOT)
+                        .input(Items.BROWN_MUSHROOM)
+                        .input(Items.PUMPKIN, 2)
+                        .input(Items.BOWL)
+                        .group("pumpkin_curry")
+                        .criterion(hasItem(Items.PUMPKIN), conditionsFromItem(Items.PUMPKIN))
+                        .offerTo(exporter);
 
                 // NOTE: Only generate these once and then move them to minecraft namespace to replace vanilla recipes
 //                // Wooden Sword

@@ -91,6 +91,8 @@ public class WillowItems {
     public static final Item BAKED_EGG = register("baked_egg", Item::new, new Item.Settings().food(WillowFoodComponents.BAKED_EGG));
     public static final Item SPRING_SALAD = register("spring_salad", Item::new, new Item.Settings().food(WillowFoodComponents.SPRING_SALAD).useRemainder(Items.BOWL).recipeRemainder(Items.GLASS_BOTTLE));
     public static final Item EGG_SANDWICH = register("egg_sandwich", Item::new, new Item.Settings().food(WillowFoodComponents.EGG_SANDWICH));
+    public static final Item GRANDMAS_APPLE_PIE = register("grandmas_apple_pie", Item::new, new Item.Settings().food(WillowFoodComponents.GRANDMAS_APPLE_PIE).recipeRemainder(Items.BUCKET));
+    public static final Item PUMPKIN_CURRY = register("pumpkin_curry", Item::new, new Item.Settings().food(WillowFoodComponents.PUMPKIN_CURRY).useRemainder(Items.BOWL));
     // Manuals
     public static final Item APPRENTICE_MINING_MANUAL = register("apprentice_mining_manual", settings -> new BaseManualItem(settings, Profession.MINING, ProfessionLevel.APPRENTICE), new Item.Settings());
     public static final Item APPRENTICE_WOODCUTTING_MANUAL = register("apprentice_woodcutting_manual", settings -> new BaseManualItem(settings, Profession.WOODCUTTING, ProfessionLevel.APPRENTICE), new Item.Settings());

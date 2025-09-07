@@ -67,6 +67,8 @@ public class WillowLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(WillowItems.BAKED_EGG, "Baked Egg");
         translationBuilder.add(WillowItems.SPRING_SALAD, "Spring Salad");
         translationBuilder.add(WillowItems.EGG_SANDWICH, "Egg Sandwich");
+        translationBuilder.add(WillowItems.GRANDMAS_APPLE_PIE, "Grandma's Apple Pie");
+        translationBuilder.add(WillowItems.PUMPKIN_CURRY, "Pumpkin Curry");
 
         translationBuilder.add(Identifier.of(Willow.MOD_ID, "profession_tooltip_novice"), "Novice");
         translationBuilder.add(Identifier.of(Willow.MOD_ID, "profession_tooltip_apprentice"), "Apprentice");

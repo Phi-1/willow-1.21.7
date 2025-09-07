@@ -8,6 +8,7 @@ import phi.willow.registry.*;
 
 public class Willow implements ModInitializer {
 
+    // TODO: replace vanilla mushroomblock with custom block that can be placed on walls, then make them spread on logs, and convert dirt to mycelium
     // TODO: fishing profession, once mastery / other talents are in
     // TODO: add manuals to librarian trades
 	// TODO: Item#onItemEntityDestroyed is a really cool event for custom crafting shenanigans
