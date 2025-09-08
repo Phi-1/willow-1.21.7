@@ -63,8 +63,8 @@ public class WillowEvents {
         LootTableEvents.MODIFY.register(WillowEvents::addHeraldDrop);
         LootTableEvents.MODIFY.register(WillowEvents::addManualsToLootTables);
         LootTableEvents.MODIFY.register(WillowEvents::addSmithingTemplatesToLootTables);
-        if (FabricLoader.getInstance().isModLoaded("terralith"))
-            LootTableEvents.MODIFY.register(WillowEvents::modifyTerralithLootTables);
+//        if (FabricLoader.getInstance().isModLoaded("terralith"))
+//            LootTableEvents.MODIFY.register(WillowEvents::modifyTerralithLootTables);
         FuelRegistryEvents.BUILD.register(WillowEvents::registerFuelItems);
         TradeOfferHelper.registerWanderingTraderOffers(WillowEvents::addWanderingTraderTrades);
         PlayerBlockBreakEvents.AFTER.register(WillowEvents::gainBlockBreakXP);
@@ -395,6 +395,7 @@ public class WillowEvents {
         // TODO: prolly just write a script for all the keys
         if (!Objects.equals(key.getValue().getNamespace(), "terralith"))
             return;
+        Willow.LOGGER.info(key.getValue().getPath());
         switch (key.getValue().getPath())
         {
             case "village/fortified/smith" ->
@@ -405,10 +406,10 @@ public class WillowEvents {
             {
 
             }
-            case "village/fortified/fisherman" ->
-            {
-                // TODO: fishing manuals?
-            }
+//            case "village/fortified/fisherman":
+//            case "village/desert/fisherman":
+//                // TODO: fishing manuals?
+//                break;
             case "village/fortified/attic" ->
             {
             }
@@ -427,6 +428,11 @@ public class WillowEvents {
             case "village/fortified/treasure" ->
             {
             }
+//            case "mage/barracks":
+//            case "witch_hut":
+//            case "":
+//                // TODO: alchemy manuals
+//                break;
         };
     }
 

@@ -23,7 +23,7 @@ public abstract class ServerWorldMixin {
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setTimeOfDay(J)V"))
     public void wakeUpEarlier(ServerWorld instance, long timeOfDay)
     {
-        instance.setTimeOfDay(timeOfDay - 1500);
+        instance.setTimeOfDay(timeOfDay - 1000);
     }
 
 }
