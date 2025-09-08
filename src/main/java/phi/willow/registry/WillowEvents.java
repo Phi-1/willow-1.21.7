@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.loot.v3.LootTableSource;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -51,6 +52,7 @@ import phi.willow.util.ProfessionUtil;
 import phi.willow.util.TickTimers;
 
 import java.util.List;
+import java.util.Objects;
 
 public class WillowEvents {
 
@@ -59,9 +61,10 @@ public class WillowEvents {
         ServerTickEvents.END_WORLD_TICK.register(TickTimers::onServerTick);
         LootTableEvents.MODIFY.register(WillowEvents::addStickDropToLeaves);
         LootTableEvents.MODIFY.register(WillowEvents::addHeraldDrop);
-        // TODO: see if loot table key can be used to get identifier of structory and terralith loot tables, then add to those if present
         LootTableEvents.MODIFY.register(WillowEvents::addManualsToLootTables);
         LootTableEvents.MODIFY.register(WillowEvents::addSmithingTemplatesToLootTables);
+        if (FabricLoader.getInstance().isModLoaded("terralith"))
+            LootTableEvents.MODIFY.register(WillowEvents::modifyTerralithLootTables);
         FuelRegistryEvents.BUILD.register(WillowEvents::registerFuelItems);
         TradeOfferHelper.registerWanderingTraderOffers(WillowEvents::addWanderingTraderTrades);
         PlayerBlockBreakEvents.AFTER.register(WillowEvents::gainBlockBreakXP);
@@ -385,6 +388,46 @@ public class WillowEvents {
     {
         final int itemSmeltTime = 200;
         builder.add(WillowItems.KINDLING, itemSmeltTime * 4);
+    }
+
+    private static void modifyTerralithLootTables(RegistryKey<LootTable> key, LootTable.Builder tableBuilder, LootTableSource source, RegistryWrapper.WrapperLookup registries)
+    {
+        // TODO: prolly just write a script for all the keys
+        if (!Objects.equals(key.getValue().getNamespace(), "terralith"))
+            return;
+        switch (key.getValue().getPath())
+        {
+            case "village/fortified/smith" ->
+            {
+
+            }
+            case "village/fortified/tavern_downstairs" ->
+            {
+
+            }
+            case "village/fortified/fisherman" ->
+            {
+                // TODO: fishing manuals?
+            }
+            case "village/fortified/attic" ->
+            {
+            }
+            case "village/fortified/generic_low" ->
+            {
+            }
+            case "village/fortified/smith/novice" ->
+            {
+            }
+            case "village/fortified/generic" ->
+            {
+            }
+            case "village/fortified/smith/expert" ->
+            {
+            }
+            case "village/fortified/treasure" ->
+            {
+            }
+        };
     }
 
     private static void addStickDropToLeaves(RegistryKey<LootTable> key, LootTable.Builder tableBuilder, LootTableSource source, RegistryWrapper.WrapperLookup registries)
