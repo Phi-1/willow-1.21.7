@@ -27,10 +27,10 @@ public class WillowEffectsAndPotions {
             new Potion("builders_potion", new StatusEffectInstance(REACH, 6000, 0, true, true)));
     public static final Potion BUILDERS_POTION_LONG = Registry.register(Registries.POTION,
             Identifier.of(Willow.MOD_ID, "builders_potion_long"),
-            new Potion("builders_potion_long", new StatusEffectInstance(REACH, 14400, 0, true, true)));
+            new Potion("builders_potion", new StatusEffectInstance(REACH, 14400, 0, true, true)));
     public static final Potion BUILDERS_POTION_STRONG = Registry.register(Registries.POTION,
             Identifier.of(Willow.MOD_ID, "builders_potion_strong"),
-            new Potion("builders_potion_strong", new StatusEffectInstance(REACH, 6000, 1, true, true)));
+            new Potion("builders_potion", new StatusEffectInstance(REACH, 6000, 1, true, true)));
 
     public static final Potion MINERS_POTION = Registry.register(Registries.POTION,
             Identifier.of(Willow.MOD_ID, "miners_potion"),

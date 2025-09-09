@@ -357,10 +357,16 @@ public class WillowEvents {
         {
             if (!ProfessionUtil.canUseToolAtLevel(ProfessionUtil.getProfessionLevel(player, Profession.MINING), stack))
                 return;
-            float modifier = 1.0f;
+            float mult = 1;
+            if (state.isIn(BlockTags.NEEDS_DIAMOND_TOOL))
+                mult = 3;
+            else if (state.isIn(BlockTags.NEEDS_IRON_TOOL))
+                mult = 2;
+            else if (state.isIn(BlockTags.NEEDS_STONE_TOOL))
+                mult = 1.5f;
             if (state.isIn(WillowTags.Blocks.VANILLA_ORES))
-                modifier = 3.0f;
-            ProfessionUtil.gainBaseXP(Profession.MINING, serverPlayer, modifier, false);
+                mult += 3.0f;
+            ProfessionUtil.gainBaseXP(Profession.MINING, serverPlayer, mult, false);
         }
         else if (stack.isIn(ItemTags.SHOVELS))
         {
@@ -373,7 +379,14 @@ public class WillowEvents {
         {
             if (!ProfessionUtil.canUseToolAtLevel(ProfessionUtil.getProfessionLevel(player, Profession.WOODCUTTING), stack))
                 return;
-            ProfessionUtil.gainBaseXP(Profession.WOODCUTTING, serverPlayer, 1, false);
+            float mult = 1;
+            if (state.isIn(BlockTags.NEEDS_DIAMOND_TOOL))
+                mult = 3;
+            else if (state.isIn(BlockTags.NEEDS_IRON_TOOL))
+                mult = 2;
+            else if (state.isIn(BlockTags.NEEDS_STONE_TOOL))
+                mult = 1.5f;
+            ProfessionUtil.gainBaseXP(Profession.WOODCUTTING, serverPlayer, mult, false);
         }
     }
 
