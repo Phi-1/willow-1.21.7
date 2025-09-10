@@ -412,40 +412,53 @@ public class WillowEvents {
         LootPool.Builder pool = LootPool.builder();
         Willow.LOGGER.info(key.getValue().getPath());
         switch (key.getValue().getPath()) {
-            case "village/fortified/smith/novice" -> {
+            case "village/fortified/smith/novice",
+                 "village/desert/smith/novice" ->
+            {
                 addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.3f, Profession.MINING);
             }
-            case "village/fortified/smith/expert" -> {
+            case "village/fortified/smith/expert",
+                 "village/desert/smith/expert" ->
+            {
                 addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.2f, Profession.MINING);
                 addManualsOfProfessions(pool, ProfessionLevel.EXPERT, 0.5f, Profession.MINING);
                 pool.rolls(ConstantLootNumberProvider.create(2.0f));
             }
-            case "village/fortified/archer" -> {
+            case "village/fortified/archer",
+                 "village/desert/archer" ->
+            {
                 addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.4f, Profession.FIGHTING);
             }
             // TODO: butcher cooking?
-            case "village/fortified/cartographer" -> {
+            case "village/fortified/cartographer",
+                 "village/desert/cartographer" ->
+            {
                 addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.1f);
                 pool.rolls(ConstantLootNumberProvider.create(2.0f));
             }
             case "village/fortified/generic",
-                 "village/fortified/generic_low" ->
+                 "village/fortified/generic_low",
+                 "village/desert/generic",
+                 "village/desert/generic_low" ->
             {
                 addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.05f);
             }
-            case "village/fortified/library" ->
+            case "village/fortified/library",
+                 "village/desert/library" ->
             {
                 addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.1f);
                 addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.05f);
                 pool.rolls(ConstantLootNumberProvider.create(3.0f));
             }
-            case "village/fortified/mason" ->
+            case "village/fortified/mason",
+                 "village/desert/mason" ->
             {
                 // TODO: building manuals?
                 // TODO: excavating instead of mining?
                 addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.2f, Profession.MINING);
             }
-            case "village/fortified/treasure" ->
+            case "village/fortified/treasure",
+                 "village/desert/treasure" ->
             {
                 addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.1f);
             }
