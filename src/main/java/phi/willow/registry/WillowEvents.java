@@ -1,5 +1,6 @@
 package phi.willow.registry;
 
+import com.mojang.datafixers.kinds.Const;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -63,8 +64,8 @@ public class WillowEvents {
         LootTableEvents.MODIFY.register(WillowEvents::addHeraldDrop);
         LootTableEvents.MODIFY.register(WillowEvents::addManualsToLootTables);
         LootTableEvents.MODIFY.register(WillowEvents::addSmithingTemplatesToLootTables);
-//        if (FabricLoader.getInstance().isModLoaded("terralith"))
-//            LootTableEvents.MODIFY.register(WillowEvents::modifyTerralithLootTables);
+        if (FabricLoader.getInstance().isModLoaded("terralith"))
+            LootTableEvents.MODIFY.register(WillowEvents::modifyTerralithLootTables);
         FuelRegistryEvents.BUILD.register(WillowEvents::registerFuelItems);
         TradeOfferHelper.registerWanderingTraderOffers(WillowEvents::addWanderingTraderTrades);
         PlayerBlockBreakEvents.AFTER.register(WillowEvents::gainBlockBreakXP);
@@ -408,45 +409,70 @@ public class WillowEvents {
         // TODO: prolly just write a script for all the keys
         if (!Objects.equals(key.getValue().getNamespace(), "terralith"))
             return;
+        LootPool.Builder pool = LootPool.builder();
         Willow.LOGGER.info(key.getValue().getPath());
-        switch (key.getValue().getPath())
-        {
-            case "village/fortified/smith" ->
-            {
-
+        switch (key.getValue().getPath()) {
+            case "village/fortified/smith/novice" -> {
+                addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.3f, Profession.MINING);
             }
-            case "village/fortified/tavern_downstairs" ->
+            case "village/fortified/smith/expert" -> {
+                addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.2f, Profession.MINING);
+                addManualsOfProfessions(pool, ProfessionLevel.EXPERT, 0.5f, Profession.MINING);
+                pool.rolls(ConstantLootNumberProvider.create(2.0f));
+            }
+            case "village/fortified/archer" -> {
+                addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.4f, Profession.FIGHTING);
+            }
+            // TODO: butcher cooking?
+            case "village/fortified/cartographer" -> {
+                addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.1f);
+                pool.rolls(ConstantLootNumberProvider.create(2.0f));
+            }
+            case "village/fortified/generic",
+                 "village/fortified/generic_low" ->
             {
-
+                addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.05f);
+            }
+            case "village/fortified/library" ->
+            {
+                addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.1f);
+                addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.05f);
+                pool.rolls(ConstantLootNumberProvider.create(3.0f));
+            }
+            case "village/fortified/mason" ->
+            {
+                // TODO: building manuals?
+                // TODO: excavating instead of mining?
+                addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.2f, Profession.MINING);
+            }
+            case "village/fortified/treasure" ->
+            {
+                addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.1f);
+            }
+            case "village/fortified/tavern_downstairs",
+                 "village/fortified/tavern_upstairs" ->
+            {
+                // TODO: willow foods
+            }
+            case "desert_outpost" ->
+            {
+                addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.2f, Profession.FIGHTING);
+                addManualsOfProfessions(pool, ProfessionLevel.EXPERT, 0.05f, Profession.FIGHTING);
+                pool.rolls(ConstantLootNumberProvider.create(2.0f));
             }
 //            case "village/fortified/fisherman":
 //            case "village/desert/fisherman":
 //                // TODO: fishing manuals?
 //                break;
-            case "village/fortified/attic" ->
-            {
-            }
-            case "village/fortified/generic_low" ->
-            {
-            }
-            case "village/fortified/smith/novice" ->
-            {
-            }
-            case "village/fortified/generic" ->
-            {
-            }
-            case "village/fortified/smith/expert" ->
-            {
-            }
-            case "village/fortified/treasure" ->
-            {
-            }
-//            case "mage/barracks":
+//            case "mage/barracks",
+//                 "mage/extras",
+//                 "mage/treasure" ->
 //            case "witch_hut":
 //            case "":
 //                // TODO: alchemy manuals
 //                break;
         };
+        tableBuilder.pool(pool);
     }
 
     private static void addStickDropToLeaves(RegistryKey<LootTable> key, LootTable.Builder tableBuilder, LootTableSource source, RegistryWrapper.WrapperLookup registries)
