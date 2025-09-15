@@ -76,7 +76,6 @@ public class WillowEvents {
 
         ServerPlayerEvents.JOIN.register((player) -> {
             PlayerProfessionState state = WillowPersistentState.getServerState(player.getServer()).getPlayerProfessionState().getPlayerState(player);
-            // FIXME: this plays the levelup sound if player is higher than novice in anything -> would be fixed by adding a separate levelup packet sent from server, instead of client calculating it
             WillowNetworking.syncPlayerProfessionState(player, state);
         });
 
@@ -297,6 +296,11 @@ public class WillowEvents {
         }
     }
 
+    private static void addItemWithChance(LootPool.Builder pool, Item item, float chance)
+    {
+        pool.with(ItemEntry.builder(item).conditionally(RandomChanceLootCondition.builder(chance)));
+    }
+
     private static Item getManualFor(Profession profession, ProfessionLevel level)
     {
         return switch (profession)
@@ -469,7 +473,12 @@ public class WillowEvents {
             case "village/fortified/tavern_downstairs",
                  "village/fortified/tavern_upstairs" ->
             {
-                // TODO: willow foods
+                addItemWithChance(pool, WillowItems.POTATO_SALAD, 0.2f);
+                addItemWithChance(pool, WillowItems.PUMPKIN_CURRY, 0.2f);
+                addItemWithChance(pool, WillowItems.EGG_SANDWICH, 0.2f);
+                addItemWithChance(pool, WillowItems.SPRING_SALAD, 0.2f);
+                addItemWithChance(pool, WillowItems.BAKED_EGG, 0.3f);
+                pool.rolls(ConstantLootNumberProvider.create(5.0f));
             }
             case "desert_outpost" ->
             {

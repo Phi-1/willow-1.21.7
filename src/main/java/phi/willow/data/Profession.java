@@ -1,7 +1,6 @@
 package phi.willow.data;
 
 public enum Profession {
-    // TODO: instance xp, basically mult on how much xp each instance of xp gain gives, because it makes sense you'd have to mine much more stone than chop logs for the same level
     MINING("Mining", 1),
     WOODCUTTING("Woodcutting", 3),
     FARMING("Farming", 3),
