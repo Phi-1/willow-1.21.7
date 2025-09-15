@@ -116,7 +116,12 @@ public class WillowEvents {
     private static void addManualsToLootTables(RegistryKey<LootTable> key, LootTable.Builder builder, LootTableSource source, RegistryWrapper.WrapperLookup registries)
     {
         LootPool.Builder pool = LootPool.builder();
-        if (key == LootTables.HERO_OF_THE_VILLAGE_LIBRARIAN_GIFT_GAMEPLAY)
+        if (key == LootTables.RUINED_PORTAL_CHEST)
+        {
+            addManualsOfProfessions(pool, ProfessionLevel.APPRENTICE, 0.1f, Profession.FIGHTING, Profession.MINING);
+            pool.rolls(ConstantLootNumberProvider.create(2.0f));
+        }
+        else if (key == LootTables.HERO_OF_THE_VILLAGE_LIBRARIAN_GIFT_GAMEPLAY)
         {
             addAllManualsOfLevel(pool, ProfessionLevel.APPRENTICE, 0.3f);
             addAllManualsOfLevel(pool, ProfessionLevel.EXPERT, 0.05f);
