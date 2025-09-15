@@ -3,6 +3,28 @@
   "values": [
     "#minecraft:birch_logs",
     "#minecraft:jungle_logs",
-    "#minecraft:acacia_logs"
+    "#minecraft:acacia_logs",
+
+    "minecraft:granite",
+    "minecraft:granite_wall",
+    "minecraft:granite_slab",
+    "minecraft:granite_stairs",
+    "minecraft:polished_granite",
+    "minecraft:polished_granite_stairs",
+    "minecraft:polished_granite_slab",
+    "minecraft:diorite",
+    "minecraft:diorite_wall",
+    "minecraft:diorite_slab",
+    "minecraft:diorite_stairs",
+    "minecraft:polished_diorite",
+    "minecraft:polished_diorite_stairs",
+    "minecraft:polished_diorite_slab",
+    "minecraft:andesite",
+    "minecraft:andesite_wall",
+    "minecraft:andesite_slab",
+    "minecraft:andesite_stairs",
+    "minecraft:polished_andesite",
+    "minecraft:polished_andesite_stairs",
+    "minecraft:polished_andesite_slab"
   ]
 }

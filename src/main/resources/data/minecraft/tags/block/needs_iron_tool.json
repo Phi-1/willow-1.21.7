@@ -8,6 +8,9 @@
 
     "minecraft:calcite",
 
+    "#willow:vanilla_deepslate_blocks",
+    "#willow:vanilla_deepslate_ores",
+
     "minecraft:tuff",
     "minecraft:tuff_slab",
     "minecraft:tuff_stairs",
@@ -47,28 +50,6 @@
     "minecraft:small_amethyst_bud",
     "minecraft:medium_amethyst_bud",
     "minecraft:large_amethyst_bud",
-
-    "minecraft:granite",
-    "minecraft:granite_wall",
-    "minecraft:granite_slab",
-    "minecraft:granite_stairs",
-    "minecraft:polished_granite",
-    "minecraft:polished_granite_stairs",
-    "minecraft:polished_granite_slab",
-    "minecraft:diorite",
-    "minecraft:diorite_wall",
-    "minecraft:diorite_slab",
-    "minecraft:diorite_stairs",
-    "minecraft:polished_diorite",
-    "minecraft:polished_diorite_stairs",
-    "minecraft:polished_diorite_slab",
-    "minecraft:andesite",
-    "minecraft:andesite_wall",
-    "minecraft:andesite_slab",
-    "minecraft:andesite_stairs",
-    "minecraft:polished_andesite",
-    "minecraft:polished_andesite_stairs",
-    "minecraft:polished_andesite_slab",
 
     "minecraft:pointed_dripstone",
     "minecraft:dripstone_block"

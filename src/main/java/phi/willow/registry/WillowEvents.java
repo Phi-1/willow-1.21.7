@@ -410,7 +410,6 @@ public class WillowEvents {
         if (!Objects.equals(key.getValue().getNamespace(), "terralith"))
             return;
         LootPool.Builder pool = LootPool.builder();
-        Willow.LOGGER.info(key.getValue().getPath());
         switch (key.getValue().getPath()) {
             case "village/fortified/smith/novice",
                  "village/desert/smith/novice" ->
