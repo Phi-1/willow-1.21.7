@@ -8,6 +8,7 @@
     "BiomeMixin",
     "BlocksMixin",
     "CropBlockInvoker",
+    "EntityMixin",
     "FireworkRocketEntityMixin",
     "HoeItemMixin",
     "HungerManagerMixin",
