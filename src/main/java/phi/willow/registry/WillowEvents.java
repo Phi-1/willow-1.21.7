@@ -352,6 +352,7 @@ public class WillowEvents {
 
     private static void gainKillFightingXP(LivingEntity entity, DamageSource source)
     {
+        // FIXME: use Monster instead of HostileEntity, not all monsters use it
         if (source.getAttacker() instanceof ServerPlayerEntity player && entity instanceof HostileEntity)
             ProfessionUtil.gainBaseXP(Profession.FIGHTING, player, 2, false);
     }

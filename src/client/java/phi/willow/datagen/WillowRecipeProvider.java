@@ -32,10 +32,11 @@ public class WillowRecipeProvider extends FabricRecipeProvider {
                 RegistryWrapper.Impl<Item> itemLookup = registries.getOrThrow(RegistryKeys.ITEM);
                 // Sledgehammer
                 createShaped(RecipeCategory.TOOLS, WillowItems.SLEDGEHAMMER, 1)
-                        .pattern("ccc")
+                        .pattern("cic")
                         .pattern("csc")
                         .pattern(" s ")
                         .input('c', Items.STONE)
+                        .input('i', Items.IRON_INGOT)
                         .input('s', Items.STICK)
                         .group("sledgehammer")
                         .criterion(hasItem(Items.STONE), conditionsFromItem(Items.STONE))
