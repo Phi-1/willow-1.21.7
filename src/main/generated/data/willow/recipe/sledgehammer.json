@@ -4,10 +4,11 @@
   "group": "sledgehammer",
   "key": {
     "c": "minecraft:stone",
+    "i": "minecraft:iron_ingot",
     "s": "minecraft:stick"
   },
   "pattern": [
-    "ccc",
+    "cic",
     "csc",
     " s "
   ],

@@ -13,6 +13,7 @@
     "HoeItemMixin",
     "HungerManagerMixin",
     "ItemMixin",
+    "LivingEntityMixin",
     "PlayerEntityMixin",
     "ServerPlayerInteractionManagerMixin",
     "ServerWorldMixin",
