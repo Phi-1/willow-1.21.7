@@ -1,6 +1,5 @@
 package phi.willow.registry;
 
-import com.mojang.datafixers.kinds.Const;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -18,7 +17,7 @@ import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FuelRegistry;
 import net.minecraft.item.Item;
@@ -95,8 +94,8 @@ public class WillowEvents {
             return;
         final int range = sledgeHammerItem.type == SledgeHammerItem.Type.HAMMER_OF_THE_DEEP ? 8 : 6;
         final float strength = sledgeHammerItem.type == SledgeHammerItem.Type.HAMMER_OF_THE_DEEP ? 1.2f : 0.8f;
-        List<HostileEntity> mobs = living.getWorld().getEntitiesByClass(HostileEntity.class, Box.of(living.getPos(), range, range, range), LivingEntity::isAlive);
-        for (HostileEntity mob : mobs)
+        List<LivingEntity> mobs = living.getWorld().getEntitiesByClass(LivingEntity.class, Box.of(living.getPos(), range, range, range), e -> e.isAlive() && e instanceof Monster);
+        for (LivingEntity mob : mobs)
         {
             mob.takeKnockback(strength, player.getX() - mob.getX(), player.getZ() - mob.getZ());
         }
@@ -352,8 +351,7 @@ public class WillowEvents {
 
     private static void gainKillFightingXP(LivingEntity entity, DamageSource source)
     {
-        // FIXME: use Monster instead of HostileEntity, not all monsters use it
-        if (source.getAttacker() instanceof ServerPlayerEntity player && entity instanceof HostileEntity)
+        if (source.getAttacker() instanceof ServerPlayerEntity player && entity instanceof Monster)
             ProfessionUtil.gainBaseXP(Profession.FIGHTING, player, 2, false);
     }
 
